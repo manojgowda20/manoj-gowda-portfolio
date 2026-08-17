@@ -1,4 +1,4 @@
-import { GraduationCap, Calendar, MapPin, Award } from 'lucide-react';
+import { GraduationCap, Calendar, MapPin, Award, ExternalLink } from 'lucide-react';
 import { educationData, certificationsData } from '../data/portfolio';
 
 export const Education = () => {
@@ -75,26 +75,40 @@ export const Education = () => {
             </div>
 
             <div className="p-6 sm:p-7 rounded-2xl bg-white border border-black/10 shadow-sm max-h-[580px] overflow-y-auto pr-2">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 gap-3.5">
                 {certificationsData.map((cert) => (
                   <div
                     key={cert.id}
-                    className="p-3.5 rounded-xl bg-[#edf5ff] border border-black/5 hover:border-black/15 transition-colors flex flex-col justify-between"
+                    className="p-4 rounded-xl bg-[#edf5ff] border border-black/5 hover:border-black/15 transition-all flex flex-col justify-between"
                   >
                     <div>
-                      <span className="font-technical text-[9px] uppercase tracking-widest text-[#0e1111]/50 block font-bold">
+                      <span className="font-technical text-[9px] uppercase tracking-widest text-[#0e1111]/60 block font-bold">
                         {cert.issuer}
                       </span>
-                      <h4 className="font-display text-xs font-bold text-[#0e1111] mt-1 leading-snug">
+                      <h4 className="font-display text-sm font-bold text-[#0e1111] mt-1 leading-snug">
                         {cert.title}
                       </h4>
                     </div>
 
-                    <div className="mt-3 pt-2 border-t border-[#0e1111]/10 flex items-center justify-between text-[10px] font-technical text-[#0e1111]/60">
-                      <span className="flex items-center gap-1">
-                        <Award size={10} />
+                    <div className="mt-4 pt-2.5 border-t border-[#0e1111]/10 flex items-center justify-between text-xs font-technical">
+                      <span className="flex items-center gap-1 text-[#0e1111]/70 font-semibold">
+                        <Award size={12} className="text-[#0e1111]" />
                         <span>Verified</span>
                       </span>
+
+                      {cert.credentialUrl ? (
+                        <a
+                          href={cert.credentialUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1 font-bold text-[#0e1111] hover:underline bg-white px-2.5 py-1 rounded-md border border-black/10 transition-colors shadow-2xs text-[11px]"
+                        >
+                          <span>View Certificate</span>
+                          <ExternalLink size={11} />
+                        </a>
+                      ) : (
+                        <span className="text-[#0e1111]/50 text-[11px]">Credential on file</span>
+                      )}
                     </div>
                   </div>
                 ))}

@@ -252,19 +252,24 @@ export const experienceData: Experience[] = [
 ];
 
 export const certificationsData: Certification[] = [
-  { id: "cert-1", title: "Google Career Certificate", issuer: "Google", credentialUrl: "" },
-  { id: "cert-2", title: "IBM AI Badge", issuer: "IBM", credentialUrl: "" },
-  { id: "cert-3", title: "Microsoft Learn", issuer: "Microsoft", credentialUrl: "" },
-  { id: "cert-4", title: "AWS CloudQuest", issuer: "AWS", credentialUrl: "" },
-  { id: "cert-5", title: "Cisco Skills for All", issuer: "Cisco", credentialUrl: "" },
-  { id: "cert-6", title: "Databricks Academy", issuer: "Databricks", credentialUrl: "" },
-  { id: "cert-7", title: "Intel AI Academy", issuer: "Intel", credentialUrl: "" },
-  { id: "cert-8", title: "SAP Learning Journey", issuer: "SAP", credentialUrl: "" },
-  { id: "cert-9", title: "NVIDIA DLI", issuer: "NVIDIA", credentialUrl: "" },
-  { id: "cert-10", title: "Generative AI", issuer: "Google Cloud", credentialUrl: "" },
-  { id: "cert-11", title: "Python for Data Science", issuer: "SkillEcted", credentialUrl: "" },
-  { id: "cert-12", title: "Data Analytics Career Skills", issuer: "LinkedIn", credentialUrl: "" },
-  { id: "cert-13", title: "Git Training & Version Architecture", issuer: "Simplilearn", credentialUrl: "" }
+  { 
+    id: "cert-1", 
+    title: "Python for Data Science: From Basics to Projects", 
+    issuer: "SkillEcted Campus Program", 
+    credentialUrl: "https://lnkd.in/p/g3gYKTEZ" 
+  },
+  { 
+    id: "cert-2", 
+    title: "GIT — Cloud Computing & Version Architecture", 
+    issuer: "SkillUp by Simplilearn", 
+    credentialUrl: "https://lnkd.in/p/guVEqZND" 
+  },
+  { 
+    id: "cert-3", 
+    title: "Data Analytics Career Skills", 
+    issuer: "LinkedIn Learning", 
+    credentialUrl: "https://linkedin.com/in/manoj-gowda-cd" 
+  }
 ];
 
 export const categorizedSkills = [
