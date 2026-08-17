@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Fragment+Mono:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background-base: #edf5ff;
+  --background-card: #ffffff;
+  --text-primary: #0e1111;
+  --text-secondary: rgba(14, 17, 17, 0.75);
+  --text-muted: rgba(14, 17, 17, 0.55);
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #edf5ff;
+  color: #0e1111;
+}
+
+body {
+  background-color: #edf5ff;
+  color: #0e1111;
+  font-family: 'Albert Sans', 'Plus Jakarta Sans', system-ui, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #edf5ff;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(14, 17, 17, 0.2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(14, 17, 17, 0.35);
+}
