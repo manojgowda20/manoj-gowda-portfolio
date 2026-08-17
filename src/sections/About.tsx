@@ -116,7 +116,7 @@ export const About = () => {
           
           {/* Left: Summary & Developer Bio */}
           <div className="lg:col-span-6 flex flex-col gap-6">
-            <div className="p-7 rounded-2xl bg-white border border-black/10 shadow-sm">
+            <div className="p-5 sm:p-7 rounded-2xl bg-white border border-black/10 shadow-sm">
               <h3 className="font-display text-xl font-bold text-[#0e1111] mb-1">
                 {personalInfo.name}
               </h3>
@@ -124,7 +124,7 @@ export const About = () => {
                 {personalInfo.title}
               </p>
               
-              <div className="space-y-4 text-sm text-[#0e1111]/85 leading-relaxed font-display font-light">
+              <div className="space-y-4 text-xs sm:text-sm text-[#0e1111]/85 leading-relaxed font-display font-light">
                 <p>
                   {personalInfo.bio}
                 </p>
@@ -134,19 +134,19 @@ export const About = () => {
               </div>
 
               {/* Social and Contact Links Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mt-6 pt-6 border-t border-[#0e1111]/10 font-technical text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3.5 mt-6 pt-6 border-t border-[#0e1111]/10 font-technical text-xs">
                 <a 
                   href={`mailto:${personalInfo.email}`} 
                   className="flex items-center gap-2 p-2.5 rounded-lg bg-[#edf5ff] hover:bg-black/5 text-[#0e1111] transition-colors"
                 >
-                  <Mail size={14} className="text-[#0e1111]/70" />
+                  <Mail size={14} className="text-[#0e1111]/70 flex-shrink-0" />
                   <span className="truncate">{personalInfo.email}</span>
                 </a>
                 <a 
                   href={`tel:${personalInfo.phone.replace(/\s+/g, '')}`} 
                   className="flex items-center gap-2 p-2.5 rounded-lg bg-[#edf5ff] hover:bg-black/5 text-[#0e1111] transition-colors"
                 >
-                  <Phone size={14} className="text-[#0e1111]/70" />
+                  <Phone size={14} className="text-[#0e1111]/70 flex-shrink-0" />
                   <span>{personalInfo.phone}</span>
                 </a>
                 <a 
@@ -157,7 +157,7 @@ export const About = () => {
                 >
                   <LinkedinIcon />
                   <span className="truncate">LinkedIn Profile</span>
-                  <ArrowUpRight size={12} className="ml-auto opacity-50" />
+                  <ArrowUpRight size={12} className="ml-auto opacity-50 flex-shrink-0" />
                 </a>
                 <a 
                   href={socialLinks.find(s => s.platform === 'GitHub')?.url || '#'} 
@@ -167,12 +167,12 @@ export const About = () => {
                 >
                   <GithubIcon />
                   <span className="truncate">GitHub Repositories</span>
-                  <ArrowUpRight size={12} className="ml-auto opacity-50" />
+                  <ArrowUpRight size={12} className="ml-auto opacity-50 flex-shrink-0" />
                 </a>
               </div>
 
               {/* Download Resume Button */}
-              <div className="mt-6 pt-4 border-t border-[#0e1111]/10 flex items-center justify-between">
+              <div className="mt-6 pt-4 border-t border-[#0e1111]/10 flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-1.5 font-technical text-xs text-[#0e1111]/60">
                   <MapPin size={13} />
                   <span>{personalInfo.location}</span>
@@ -191,7 +191,7 @@ export const About = () => {
 
           {/* Right: Interactive Skill Focus Matrix */}
           <div className="lg:col-span-6 flex flex-col">
-            <div className="p-7 rounded-2xl bg-white border border-black/10 shadow-sm h-full flex flex-col justify-between">
+            <div className="p-5 sm:p-7 rounded-2xl bg-white border border-black/10 shadow-sm h-full flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between pb-4 mb-6 border-b border-[#0e1111]/10">
                   <span className="font-technical text-xs uppercase tracking-widest text-[#0e1111]/60 font-semibold">
@@ -203,7 +203,7 @@ export const About = () => {
                 </div>
 
                 {/* Category Pills Tablist */}
-                <div role="tablist" aria-label="Technical domain focus areas" className="flex flex-wrap gap-2 mb-6">
+                <div role="tablist" aria-label="Technical domain focus areas" className="flex overflow-x-auto pb-2 sm:pb-0 sm:flex-wrap gap-2 mb-6 -mx-5 px-5 sm:mx-0 sm:px-0">
                   {profileCategories.map((cat) => {
                     const isActive = activeCategory === cat.id;
                     return (
@@ -213,7 +213,7 @@ export const About = () => {
                         aria-selected={isActive}
                         onClick={() => setActiveCategory(cat.id)}
                         className={cn(
-                          'flex items-center gap-1.5 px-3.5 py-1.5 rounded-full font-technical text-xs uppercase tracking-wider transition-all duration-200',
+                          'flex items-center gap-1.5 px-3.5 py-1.5 rounded-full font-technical text-xs uppercase tracking-wider transition-all duration-200 whitespace-nowrap flex-shrink-0 sm:flex-shrink cursor-pointer',
                           isActive
                             ? 'bg-[#0e1111] text-white font-semibold shadow-sm'
                             : 'bg-[#edf5ff] text-[#0e1111]/70 hover:text-[#0e1111] hover:bg-black/5'

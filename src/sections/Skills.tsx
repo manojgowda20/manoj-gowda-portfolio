@@ -40,7 +40,7 @@ export const Skills = () => {
         </div>
 
         {/* Filter Pills */}
-        <div role="tablist" aria-label="Skills filtering options" className="flex flex-wrap gap-2 mb-10">
+        <div role="tablist" aria-label="Skills filtering options" className="flex overflow-x-auto pb-2 sm:pb-0 sm:flex-wrap gap-2 mb-10 -mx-6 px-6 sm:mx-0 sm:px-0">
           {filterOptions.map((filter) => {
             const isActive = activeCategory === filter.id;
             return (
@@ -50,7 +50,7 @@ export const Skills = () => {
                 aria-selected={isActive}
                 onClick={() => setActiveCategory(filter.id)}
                 className={cn(
-                  'px-4 py-2 rounded-full font-technical text-xs uppercase tracking-wider transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#0e1111]/20 cursor-pointer',
+                  'px-4 py-2 rounded-full font-technical text-xs uppercase tracking-wider transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#0e1111]/20 cursor-pointer whitespace-nowrap flex-shrink-0 sm:flex-shrink',
                   isActive
                     ? 'bg-[#0e1111] text-white font-semibold shadow-sm'
                     : 'bg-white text-[#0e1111]/70 hover:text-[#0e1111] border border-black/10 hover:bg-[#edf5ff]'
