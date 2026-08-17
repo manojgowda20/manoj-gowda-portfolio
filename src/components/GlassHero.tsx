@@ -144,13 +144,13 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
 
   const scrollToSection = (id: string) => {
     setMobileMenuOpen(false);
-    if (onNavigate) {
-      onNavigate(id);
-      return;
-    }
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const topOffset = element.getBoundingClientRect().top + window.pageYOffset - 60;
+      window.scrollTo({ top: Math.max(0, topOffset), behavior: 'smooth' });
+    }
+    if (onNavigate) {
+      onNavigate(id);
     }
   };
 
@@ -368,11 +368,16 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
 
       {/* Top Bar for initial hero view (High-visibility frosted pill styling for desktop and mobile) */}
       <nav 
-        className="absolute top-[max(1rem,env(safe-area-inset-top,0px))] left-0 right-0 px-3 sm:px-[max(4vw,1.5rem)] flex justify-between items-center z-30 animate-nav pointer-events-auto"
+        className="absolute top-[max(1rem,env(safe-area-inset-top,0px))] left-0 right-0 px-3 sm:px-[max(4vw,1.5rem)] flex justify-between items-center z-50 animate-nav pointer-events-auto"
         aria-label="Hero navigation"
+        onPointerDown={(e) => e.stopPropagation()}
+        onTouchStart={(e) => e.stopPropagation()}
       >
         <button 
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onClick={(e) => {
+            e.stopPropagation();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
           className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/95 backdrop-blur-md border border-black/15 shadow-sm text-left focus:outline-none focus:ring-2 focus:ring-[#0e1111]/20 cursor-pointer transition-transform hover:scale-[1.02]"
         >
           <svg viewBox="0 0 32 32" className="w-4 h-4 sm:w-5 sm:h-5 fill-none stroke-current stroke-[2.2] text-[#0e1111]" aria-hidden="true">
@@ -414,17 +419,21 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
         {/* Mobile menu toggle & WhatsApp CTA */}
         <div className="flex items-center gap-2">
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-full bg-white/95 backdrop-blur-md border border-black/15 text-[#0e1111] shadow-sm flex items-center justify-center cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation();
+              setMobileMenuOpen(!mobileMenuOpen);
+            }}
+            className="md:hidden p-2.5 rounded-full bg-white/95 backdrop-blur-md border border-black/15 text-[#0e1111] shadow-sm flex items-center justify-center cursor-pointer active:scale-95 transition-transform"
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           >
-            {mobileMenuOpen ? <X size={16} /> : <Menu size={16} />}
+            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
           <a 
             href={personalInfo.whatsappUrl}
             target="_blank"
             rel="noreferrer"
-            className="bg-[#0e1111] text-white hover:bg-[#0e1111]/90 border border-black/10 px-3.5 sm:px-5 py-2 rounded-full font-technical text-[11px] sm:text-xs uppercase tracking-wider font-bold transition-all duration-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0e1111]/20 flex items-center justify-center min-h-[36px] sm:min-h-[40px]"
+            onClick={(e) => e.stopPropagation()}
+            className="bg-[#0e1111] text-white hover:bg-[#0e1111]/90 border border-black/10 px-3.5 sm:px-5 py-2 rounded-full font-technical text-[11px] sm:text-xs uppercase tracking-wider font-bold transition-all duration-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0e1111]/20 flex items-center justify-center min-h-[38px] sm:min-h-[40px] cursor-pointer active:scale-95"
           >
             <span>Let's talk</span>
           </a>
@@ -438,16 +447,21 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="absolute top-[68px] left-3 right-3 p-4 rounded-2xl bg-white/95 backdrop-blur-xl border border-black/15 shadow-xl z-40 md:hidden font-technical text-xs uppercase tracking-wider text-[#0e1111] font-bold flex flex-col gap-2"
+            onPointerDown={(e) => e.stopPropagation()}
+            onTouchStart={(e) => e.stopPropagation()}
+            className="absolute top-[68px] left-3 right-3 p-4 rounded-2xl bg-white/95 backdrop-blur-xl border border-black/15 shadow-xl z-50 md:hidden font-technical text-xs uppercase tracking-wider text-[#0e1111] font-bold flex flex-col gap-2 pointer-events-auto"
           >
             {['about', 'work', 'skills', 'education'].map((sec) => (
               <button
                 key={sec}
-                onClick={() => scrollToSection(sec)}
-                className="text-left p-2.5 rounded-xl hover:bg-black/5 flex items-center justify-between transition-colors cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  scrollToSection(sec);
+                }}
+                className="text-left p-3 rounded-xl hover:bg-black/5 active:bg-black/10 flex items-center justify-between transition-colors cursor-pointer min-h-[44px]"
               >
                 <span>{sec}</span>
-                <ArrowUpRight size={14} className="opacity-50" />
+                <ArrowUpRight size={15} className="opacity-60" />
               </button>
             ))}
           </motion.div>
@@ -468,23 +482,33 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
       </section>
 
       {/* Bottom copy and action triggers */}
-      <div className="hero-intro animate-intro-container flex flex-col items-start">
+      <div 
+        className="hero-intro animate-intro-container flex flex-col items-start z-30 pointer-events-auto"
+        onPointerDown={(e) => e.stopPropagation()}
+        onTouchStart={(e) => e.stopPropagation()}
+      >
         <p className="text-xs sm:text-sm md:text-base leading-relaxed text-[#0e1111]/85 font-display tracking-tight pointer-events-auto">
           I am a full-stack developer and Python engineer crafting robust backend APIs, secure registries, and intelligent computer vision pipelines.
         </p>
         <div className="flex flex-wrap items-center gap-2.5 sm:gap-4 pointer-events-auto">
           <button 
-            onClick={() => scrollToSection('work')}
-            className="bg-white text-[#0e1111] hover:bg-[#edf5ff] border border-black/15 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-technical text-[11px] sm:text-xs uppercase tracking-wider font-bold transition-all duration-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0e1111]/20 flex items-center justify-center min-h-[40px] sm:min-h-[44px] cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation();
+              scrollToSection('work');
+            }}
+            className="bg-white text-[#0e1111] hover:bg-[#edf5ff] border border-black/15 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-technical text-[11px] sm:text-xs uppercase tracking-wider font-bold transition-all duration-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0e1111]/20 flex items-center justify-center min-h-[40px] sm:min-h-[44px] cursor-pointer active:scale-95"
           >
             Explore my work
           </button>
           <button
-            onClick={() => scrollToSection('about')}
-            className="md:hidden inline-flex items-center gap-1 text-[11px] font-technical uppercase font-bold text-[#0e1111]/70 px-3 py-2 rounded-full border border-black/10 bg-white/70 backdrop-blur-sm"
+            onClick={(e) => {
+              e.stopPropagation();
+              scrollToSection('about');
+            }}
+            className="md:hidden inline-flex items-center gap-1.5 text-[11px] font-technical uppercase font-bold text-[#0e1111] px-3.5 py-2 rounded-full border border-black/15 bg-white/90 backdrop-blur-sm cursor-pointer active:scale-95 min-h-[40px]"
           >
-            <span>Scroll</span>
-            <ChevronDown size={13} className="animate-bounce" />
+            <span>About</span>
+            <ChevronDown size={14} className="animate-bounce" />
           </button>
         </div>
       </div>

@@ -266,9 +266,9 @@ export const certificationsData: Certification[] = [
   },
   { 
     id: "cert-3", 
-    title: "Data Analytics Career Skills", 
+    title: "Introduction to Career Skills in Data Analytics", 
     issuer: "LinkedIn Learning", 
-    credentialUrl: "https://linkedin.com/in/manoj-gowda-cd" 
+    credentialUrl: "https://lnkd.in/p/gQUDygQY" 
   }
 ];
 

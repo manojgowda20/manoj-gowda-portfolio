@@ -41,6 +41,11 @@ export const Navbar = ({ activeSection, onNavigate }: NavbarProps) => {
 
   const handleItemClick = (id: string) => {
     setMobileMenuOpen(false);
+    const element = document.getElementById(id);
+    if (element) {
+      const topOffset = element.getBoundingClientRect().top + window.pageYOffset - 60;
+      window.scrollTo({ top: Math.max(0, topOffset), behavior: 'smooth' });
+    }
     onNavigate(id);
   };
 
