@@ -10,7 +10,24 @@ interface GlassHeroProps {
 export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const revealRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Ensure video autoplays smoothly across mobile and desktop browsers
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.muted = true;
+      video.defaultMuted = true;
+      video.playsInline = true;
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Autoplay fallback: poster/base image displays smoothly
+        });
+      }
+    }
+  }, []);
 
   // Animation values stored in refs to prevent React state re-renders
   const rawPos = useRef({ x: -999, y: -999 });
@@ -327,18 +344,22 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
         }
       `}</style>
 
-      {/* LAYER 1: Base Portrait / Video Background (scaled to crop out any Gemini/AI corner watermarks) */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        poster="/images/Base_image_desktop.png"
-        className="absolute inset-0 w-full h-full object-cover z-[1] pointer-events-none scale-[1.16] sm:scale-[1.12] origin-center"
-      >
-        <source src="/images/hero.mp4" type="video/mp4" />
-        <source src="/images/Man_walking_toward_camera_202608181141.mp4" type="video/mp4" />
-      </video>
+      {/* LAYER 1: Base Portrait / Video Background (Cropped to remove AI watermarks & centered for mobile & web) */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-[1]">
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          poster="/images/Base_image_desktop.png"
+          className="absolute w-[126%] h-[126%] -left-[13%] -top-[13%] max-w-none object-cover object-[62%_center] md:w-[114%] md:h-[114%] md:-left-[7%] md:-top-[7%] md:object-center pointer-events-none"
+        >
+          <source src="/images/hero.mp4" type="video/mp4" />
+          <source src="/images/Man_walking_toward_camera_202608181141.mp4" type="video/mp4" />
+        </video>
+      </div>
       <div aria-hidden="true" className="hero-base animate-hero-image" style={{ zIndex: 0 }} />
 
       {/* LAYER 2: Reveal Portrait */}
