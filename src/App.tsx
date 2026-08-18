@@ -15,19 +15,23 @@ function App() {
   // Track which section to scroll to after closing project view
   const pendingScrollTarget = useRef<string | null>(null);
 
+  const scrollToTarget = (targetId: string) => {
+    const el = document.getElementById(targetId);
+    if (el) {
+      const topOffset = el.getBoundingClientRect().top + window.scrollY - 70;
+      window.scrollTo({ top: Math.max(0, topOffset), behavior: 'smooth' });
+    }
+  };
+
   // After project view unmounts and main page mounts, execute pending scroll
   useEffect(() => {
     if (!selectedProjectId && pendingScrollTarget.current) {
       const target = pendingScrollTarget.current;
       pendingScrollTarget.current = null;
-      // Give the main page DOM time to mount
+      // Double requestAnimationFrame ensures the DOM has painted before measuring
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          const el = document.getElementById(target);
-          if (el) {
-            const topOffset = el.getBoundingClientRect().top + window.pageYOffset - 70;
-            window.scrollTo({ top: Math.max(0, topOffset), behavior: 'smooth' });
-          }
+          scrollToTarget(target);
         });
       });
     }
@@ -41,8 +45,12 @@ function App() {
         setSelectedProjectId(hash);
         window.scrollTo({ top: 0, behavior: 'instant' as any });
       } else if (['about', 'work', 'skills', 'education'].includes(hash)) {
-        setSelectedProjectId(null);
-        pendingScrollTarget.current = hash;
+        if (selectedProjectId) {
+          pendingScrollTarget.current = hash;
+          setSelectedProjectId(null);
+        } else {
+          scrollToTarget(hash);
+        }
       } else if (hash === '' || hash === 'home') {
         setSelectedProjectId(null);
       }
@@ -51,7 +59,7 @@ function App() {
     handleHash();
     window.addEventListener('hashchange', handleHash);
     return () => window.removeEventListener('hashchange', handleHash);
-  }, []);
+  }, [selectedProjectId]);
 
   // IntersectionObserver to track the active section during scrolling
   useEffect(() => {
@@ -97,11 +105,9 @@ function App() {
     } catch {
       window.location.hash = sectionId;
     }
-    const el = document.getElementById(sectionId);
-    if (el) {
-      const topOffset = el.getBoundingClientRect().top + window.pageYOffset - 70;
-      window.scrollTo({ top: Math.max(0, topOffset), behavior: 'smooth' });
-    }
+
+    // Scroll immediately
+    scrollToTarget(sectionId);
   };
 
   const handleSelectProject = (projectId: string) => {
@@ -126,7 +132,7 @@ function App() {
 
   if (selectedProjectId) {
     return (
-      <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#edf5ff] text-[#0e1111] font-display">
+      <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#edf5ff] dark:bg-[#070b12] text-[#0e1111] dark:text-white font-display transition-colors duration-300">
         {/* Premium custom cursor — desktop only, pointer-events: none */}
         <CustomCursor />
         <Navbar activeSection="work" onNavigate={handleNavigate} isProjectView={true} />
@@ -141,7 +147,7 @@ function App() {
   }
 
   return (
-    <div className="relative min-h-screen w-full max-w-full overflow-x-hidden bg-[#edf5ff] text-[#0e1111] font-display">
+    <div className="relative min-h-screen w-full max-w-full overflow-x-hidden bg-[#edf5ff] dark:bg-[#070b12] text-[#0e1111] dark:text-white font-display transition-colors duration-300">
       {/* Premium custom cursor — desktop only, pointer-events: none */}
       <CustomCursor />
 

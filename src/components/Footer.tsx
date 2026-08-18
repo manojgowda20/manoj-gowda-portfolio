@@ -22,15 +22,15 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="py-12 border-t border-[#0e1111]/10 bg-[#edf5ff] text-[#0e1111]">
+    <footer className="py-12 border-t border-black/10 dark:border-white/[0.08] bg-[#edf5ff] dark:bg-[#070b12] text-[#0e1111] dark:text-white transition-colors duration-300">
       <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
         
         {/* Left: Branding */}
         <div className="flex flex-col items-center md:items-start text-center md:text-left">
-          <span className="font-technical text-sm font-bold uppercase tracking-tight text-[#0e1111]">
+          <span className="font-technical text-sm font-bold uppercase tracking-tight text-[#0e1111] dark:text-white">
             {personalInfo.name}
           </span>
-          <span className="font-display text-xs text-[#0e1111]/60 mt-1 font-light">
+          <span className="font-display text-xs text-[#0e1111]/60 dark:text-white/45 mt-1 font-light">
             Full-Stack Developer & Python Backend Engineer
           </span>
         </div>
@@ -41,7 +41,7 @@ export const Footer = () => {
             href={socialLinks.find(s => s.platform === 'GitHub')?.url || '#'}
             target="_blank"
             rel="noreferrer"
-            className="p-2 rounded-full bg-white border border-black/10 text-[#0e1111] hover:bg-[#edf5ff] transition-colors"
+            className="p-2 rounded-full bg-white dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[#0e1111] dark:text-white hover:bg-[#edf5ff] dark:hover:bg-white/15 transition-colors shadow-2xs dark:shadow-none"
             aria-label="GitHub Profile"
           >
             <GithubIcon />
@@ -50,21 +50,21 @@ export const Footer = () => {
             href={socialLinks.find(s => s.platform === 'LinkedIn')?.url || '#'}
             target="_blank"
             rel="noreferrer"
-            className="p-2 rounded-full bg-white border border-black/10 text-[#0e1111] hover:bg-[#edf5ff] transition-colors"
+            className="p-2 rounded-full bg-white dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[#0e1111] dark:text-white hover:bg-[#edf5ff] dark:hover:bg-white/15 transition-colors shadow-2xs dark:shadow-none"
             aria-label="LinkedIn Profile"
           >
             <LinkedinIcon />
           </a>
           <a
             href={`mailto:${personalInfo.email}`}
-            className="p-2 rounded-full bg-white border border-black/10 text-[#0e1111] hover:bg-[#edf5ff] transition-colors"
+            className="p-2 rounded-full bg-white dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[#0e1111] dark:text-white hover:bg-[#edf5ff] dark:hover:bg-white/15 transition-colors shadow-2xs dark:shadow-none"
             aria-label="Send Email"
           >
             <Mail size={16} />
           </a>
           <a
             href={`tel:${personalInfo.phone.replace(/\s+/g, '')}`}
-            className="p-2 rounded-full bg-white border border-black/10 text-[#0e1111] hover:bg-[#edf5ff] transition-colors"
+            className="p-2 rounded-full bg-white dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[#0e1111] dark:text-white hover:bg-[#edf5ff] dark:hover:bg-white/15 transition-colors shadow-2xs dark:shadow-none"
             aria-label="Call Phone"
           >
             <Phone size={16} />
@@ -74,7 +74,7 @@ export const Footer = () => {
         {/* Right: Scroll to top */}
         <button
           onClick={scrollToTop}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-black/10 hover:bg-[#edf5ff] font-technical text-xs uppercase tracking-wider text-[#0e1111] font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-[#0e1111]/20 cursor-pointer shadow-sm"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-white/[0.06] border border-black/10 dark:border-white/10 hover:bg-[#edf5ff] dark:hover:bg-white/15 font-technical text-xs uppercase tracking-wider text-[#0e1111] dark:text-white font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-black/20 dark:focus:ring-white/20 cursor-pointer shadow-sm"
         >
           <span>Back to Top</span>
           <ArrowUp size={13} />

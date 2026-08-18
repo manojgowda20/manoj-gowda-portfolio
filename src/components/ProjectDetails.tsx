@@ -215,54 +215,54 @@ export const ProjectDetails = ({ projectId, onBack, onSelectProject }: ProjectDe
   }, [projectId]);
 
   return (
-    <main className="min-h-screen w-full max-w-full bg-[#edf5ff] text-[#0e1111] pt-24 sm:pt-28 pb-12 sm:pb-16 px-4 sm:px-6 select-text">
+    <main className="min-h-screen w-full max-w-full bg-[#edf5ff] dark:bg-[#070b12] text-[#0e1111] dark:text-white pt-24 sm:pt-28 pb-12 sm:pb-16 px-4 sm:px-6 select-text transition-colors duration-300">
       <div className="max-w-5xl mx-auto w-full">
         
         {/* Back button */}
         <button
           type="button"
           onClick={onBack}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-black/10 text-[#0e1111] hover:bg-[#edf5ff] font-technical text-xs uppercase tracking-wider font-semibold shadow-sm transition-all duration-200 mb-8 focus:outline-none focus:ring-2 focus:ring-[#0e1111]/20 cursor-pointer active:scale-95 touch-manipulation min-h-[44px]"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white dark:bg-white/[0.06] border border-black/10 dark:border-white/15 text-[#0e1111] dark:text-white hover:bg-[#edf5ff] dark:hover:bg-white/12 font-technical text-xs uppercase tracking-wider font-semibold shadow-sm transition-all duration-200 mb-8 focus:outline-none focus:ring-2 focus:ring-black/20 dark:focus:ring-white/20 cursor-pointer active:scale-95 touch-manipulation min-h-[44px]"
         >
           <ArrowLeft size={15} />
           <span>Back to Projects</span>
         </button>
 
         {/* Hero Header */}
-        <div className="p-6 sm:p-10 rounded-2xl bg-white border border-black/10 shadow-sm mb-8 text-left">
+        <div className="p-6 sm:p-10 rounded-2xl bg-white dark:bg-[#0d1421] border border-black/10 dark:border-white/10 shadow-sm mb-8 text-left transition-colors duration-300">
           <div className="flex flex-wrap gap-2 mb-4">
             {project.tags.map((tag) => (
               <span
                 key={tag}
-                className="font-technical text-[10px] uppercase tracking-wider px-3 py-1 rounded-full bg-[#edf5ff] text-[#0e1111] border border-black/5 font-semibold"
+                className="font-technical text-[10px] uppercase tracking-wider px-3 py-1 rounded-full bg-[#edf5ff] dark:bg-white/[0.07] text-[#0e1111] dark:text-white/70 border border-black/5 dark:border-white/[0.08] font-semibold"
               >
                 {tag}
               </span>
             ))}
           </div>
 
-          <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#0e1111] mb-4 leading-tight">
+          <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#0e1111] dark:text-white mb-4 leading-tight">
             {project.title}
           </h1>
 
-          <p className="font-display text-sm sm:text-base text-[#0e1111]/80 leading-relaxed font-light mb-6 max-w-3xl">
+          <p className="font-display text-sm sm:text-base text-[#0e1111]/80 dark:text-white/75 leading-relaxed font-light mb-6 max-w-3xl">
             {project.description}
           </p>
 
           {/* Action Links */}
-          <div className="flex flex-wrap items-center gap-3 pt-6 border-t border-[#0e1111]/10">
+          <div className="flex flex-wrap items-center gap-3 pt-6 border-t border-black/10 dark:border-white/10">
             {project.liveUrl ? (
               <a
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0e1111] text-white hover:bg-[#0e1111]/90 font-technical text-xs uppercase tracking-wider font-semibold transition-all duration-200 shadow-sm cursor-pointer active:scale-95 touch-manipulation min-h-[44px]"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0e1111] dark:bg-white text-white dark:text-[#070b12] hover:bg-[#0e1111]/90 dark:hover:bg-white/90 font-technical text-xs uppercase tracking-wider font-semibold transition-all duration-200 shadow-sm cursor-pointer active:scale-95 touch-manipulation min-h-[44px]"
               >
                 <span>Live Demonstration</span>
                 <ExternalLink size={13} />
               </a>
             ) : (
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#edf5ff] text-[#0e1111]/50 border border-black/5 font-technical text-xs uppercase tracking-wider select-none min-h-[40px]">
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#edf5ff] dark:bg-white/[0.05] text-[#0e1111]/50 dark:text-white/40 border border-black/5 dark:border-white/[0.07] font-technical text-xs uppercase tracking-wider select-none min-h-[40px]">
                 <span>Demo (Local Setup)</span>
               </span>
             )}
@@ -272,13 +272,13 @@ export const ProjectDetails = ({ projectId, onBack, onSelectProject }: ProjectDe
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#edf5ff] hover:bg-black/5 text-[#0e1111] border border-black/10 font-technical text-xs uppercase tracking-wider font-semibold transition-colors cursor-pointer active:scale-95 touch-manipulation min-h-[44px]"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#edf5ff] dark:bg-white/[0.07] hover:bg-black/5 dark:hover:bg-white/15 text-[#0e1111] dark:text-white border border-black/10 dark:border-white/10 font-technical text-xs uppercase tracking-wider font-semibold transition-colors cursor-pointer active:scale-95 touch-manipulation min-h-[44px]"
               >
                 <GithubIcon />
                 <span>GitHub Repository</span>
               </a>
             ) : (
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#edf5ff] text-[#0e1111]/50 border border-black/5 font-technical text-xs uppercase tracking-wider select-none min-h-[40px]">
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#edf5ff] dark:bg-white/[0.05] text-[#0e1111]/50 dark:text-white/40 border border-black/5 dark:border-white/[0.07] font-technical text-xs uppercase tracking-wider select-none min-h-[40px]">
                 <GithubIcon />
                 <span>Private Codebase</span>
               </span>
@@ -288,25 +288,25 @@ export const ProjectDetails = ({ projectId, onBack, onSelectProject }: ProjectDe
 
         {/* Problem & Solution Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-left">
-          <div className="p-6 sm:p-8 rounded-2xl bg-white border border-black/10 shadow-sm flex flex-col justify-between">
+          <div className="p-6 sm:p-8 rounded-2xl bg-white dark:bg-[#0d1421] border border-black/10 dark:border-white/10 shadow-sm flex flex-col justify-between transition-colors duration-300">
             <div>
               <div className="flex items-center gap-2 mb-3">
-                <HelpCircle size={16} className="text-[#0e1111]" />
-                <h2 className="font-display text-base font-bold text-[#0e1111]">Problem Definition</h2>
+                <HelpCircle size={16} className="text-[#2563eb] dark:text-[#4f9cf9]" />
+                <h2 className="font-display text-base font-bold text-[#0e1111] dark:text-white">Problem Definition</h2>
               </div>
-              <p className="font-display text-xs sm:text-sm text-[#0e1111]/80 leading-relaxed font-light">
+              <p className="font-display text-xs sm:text-sm text-[#0e1111]/80 dark:text-white/70 leading-relaxed font-light">
                 {project.problem}
               </p>
             </div>
           </div>
 
-          <div className="p-6 sm:p-8 rounded-2xl bg-white border border-black/10 shadow-sm flex flex-col justify-between">
+          <div className="p-6 sm:p-8 rounded-2xl bg-white dark:bg-[#0d1421] border border-black/10 dark:border-white/10 shadow-sm flex flex-col justify-between transition-colors duration-300">
             <div>
               <div className="flex items-center gap-2 mb-3">
-                <Laptop size={16} className="text-[#0e1111]" />
-                <h2 className="font-display text-base font-bold text-[#0e1111]">System Solution</h2>
+                <Laptop size={16} className="text-[#2563eb] dark:text-[#4f9cf9]" />
+                <h2 className="font-display text-base font-bold text-[#0e1111] dark:text-white">System Solution</h2>
               </div>
-              <p className="font-display text-xs sm:text-sm text-[#0e1111]/80 leading-relaxed font-light">
+              <p className="font-display text-xs sm:text-sm text-[#0e1111]/80 dark:text-white/70 leading-relaxed font-light">
                 {project.solution}
               </p>
             </div>
@@ -314,15 +314,15 @@ export const ProjectDetails = ({ projectId, onBack, onSelectProject }: ProjectDe
         </div>
 
         {/* Key Features List */}
-        <div className="p-6 sm:p-8 rounded-2xl bg-white border border-black/10 shadow-sm mb-8 text-left">
-          <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[#0e1111]/10">
-            <Settings size={16} className="text-[#0e1111]" />
-            <h2 className="font-display text-base font-bold text-[#0e1111]">Key Functional Specifications</h2>
+        <div className="p-6 sm:p-8 rounded-2xl bg-white dark:bg-[#0d1421] border border-black/10 dark:border-white/10 shadow-sm mb-8 text-left transition-colors duration-300">
+          <div className="flex items-center gap-2 mb-4 pb-3 border-b border-black/10 dark:border-white/10">
+            <Settings size={16} className="text-[#2563eb] dark:text-[#4f9cf9]" />
+            <h2 className="font-display text-base font-bold text-[#0e1111] dark:text-white">Key Functional Specifications</h2>
           </div>
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {project.features.map((feature, idx) => (
-              <li key={idx} className="flex items-start gap-2.5 font-display text-xs sm:text-sm text-[#0e1111]/80 font-light">
-                <CheckCircle2 size={14} className="mt-0.5 text-[#0e1111] flex-shrink-0" />
+              <li key={idx} className="flex items-start gap-2.5 font-display text-xs sm:text-sm text-[#0e1111]/80 dark:text-white/70 font-light">
+                <CheckCircle2 size={14} className="mt-0.5 text-[#2563eb] dark:text-[#4f9cf9] flex-shrink-0" />
                 <span>{feature}</span>
               </li>
             ))}
@@ -331,60 +331,60 @@ export const ProjectDetails = ({ projectId, onBack, onSelectProject }: ProjectDe
 
         {/* Contribution & Challenges */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-left">
-          <div className="p-6 sm:p-8 rounded-2xl bg-white border border-black/10 shadow-sm">
+          <div className="p-6 sm:p-8 rounded-2xl bg-white dark:bg-[#0d1421] border border-black/10 dark:border-white/10 shadow-sm transition-colors duration-300">
             <div className="flex items-center gap-2 mb-3">
-              <Wrench size={16} className="text-[#0e1111]" />
-              <h2 className="font-display text-base font-bold text-[#0e1111]">My Contribution</h2>
+              <Wrench size={16} className="text-[#2563eb] dark:text-[#4f9cf9]" />
+              <h2 className="font-display text-base font-bold text-[#0e1111] dark:text-white">My Contribution</h2>
             </div>
-            <p className="font-display text-xs sm:text-sm text-[#0e1111]/80 leading-relaxed font-light">
+            <p className="font-display text-xs sm:text-sm text-[#0e1111]/80 dark:text-white/70 leading-relaxed font-light">
               {project.contribution}
             </p>
           </div>
 
-          <div className="p-6 sm:p-8 rounded-2xl bg-white border border-black/10 shadow-sm">
+          <div className="p-6 sm:p-8 rounded-2xl bg-white dark:bg-[#0d1421] border border-black/10 dark:border-white/10 shadow-sm transition-colors duration-300">
             <div className="flex items-center gap-2 mb-3">
-              <ShieldAlert size={16} className="text-[#0e1111]" />
-              <h2 className="font-display text-base font-bold text-[#0e1111]">Technical Challenges & Solutions</h2>
+              <ShieldAlert size={16} className="text-[#2563eb] dark:text-[#4f9cf9]" />
+              <h2 className="font-display text-base font-bold text-[#0e1111] dark:text-white">Technical Challenges & Solutions</h2>
             </div>
-            <p className="font-display text-xs sm:text-sm text-[#0e1111]/80 leading-relaxed font-light">
+            <p className="font-display text-xs sm:text-sm text-[#0e1111]/80 dark:text-white/70 leading-relaxed font-light">
               {project.challenges}
             </p>
           </div>
         </div>
 
         {/* Architecture & Flow Diagram */}
-        <div className="p-6 sm:p-8 rounded-2xl bg-white border border-black/10 shadow-sm mb-10 text-left">
-          <div className="flex items-center gap-2 mb-6 pb-3 border-b border-[#0e1111]/10">
-            <Database size={16} className="text-[#0e1111]" />
-            <h2 className="font-display text-base font-bold text-[#0e1111]">Architecture & Technical Implementation</h2>
+        <div className="p-6 sm:p-8 rounded-2xl bg-white dark:bg-[#0d1421] border border-black/10 dark:border-white/10 shadow-sm mb-10 text-left transition-colors duration-300">
+          <div className="flex items-center gap-2 mb-6 pb-3 border-b border-black/10 dark:border-white/10">
+            <Database size={16} className="text-[#2563eb] dark:text-[#4f9cf9]" />
+            <h2 className="font-display text-base font-bold text-[#0e1111] dark:text-white">Architecture & Technical Implementation</h2>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-6 font-display text-xs sm:text-sm text-[#0e1111]/80 leading-relaxed font-light">
+            <div className="lg:col-span-6 font-display text-xs sm:text-sm text-[#0e1111]/80 dark:text-white/70 leading-relaxed font-light">
               <p className="mb-4">{project.architecture}</p>
-              <div className="p-4 rounded-xl bg-[#edf5ff] border border-black/5 font-technical text-xs text-[#0e1111]/80">
-                <span className="font-bold block mb-1">Architecture Summary:</span>
+              <div className="p-4 rounded-xl bg-[#edf5ff] dark:bg-white/[0.04] border border-black/5 dark:border-white/[0.07] font-technical text-xs text-[#0e1111]/80 dark:text-white/65">
+                <span className="font-bold block mb-1 text-[#0e1111] dark:text-white">Architecture Summary:</span>
                 Modular design with isolated data preprocessing, model inference pipelines, and clean API routing.
               </div>
             </div>
 
-            <div className="lg:col-span-6 flex items-center justify-center p-6 bg-[#edf5ff] rounded-xl border border-black/5">
+            <div className="lg:col-span-6 flex items-center justify-center p-6 bg-[#edf5ff] dark:bg-white/[0.03] rounded-xl border border-black/5 dark:border-white/[0.07]">
               {renderArchitectureDiagram(project.id)}
             </div>
           </div>
         </div>
 
         {/* Previous / Next Project Navigation Footer */}
-        <div className="pt-8 border-t border-[#0e1111]/10 flex items-center justify-between gap-4">
+        <div className="pt-8 border-t border-black/10 dark:border-white/10 flex items-center justify-between gap-4">
           <button
             type="button"
             onClick={() => onSelectProject(prevProject.id)}
-            className="flex items-center gap-2 sm:gap-3 p-3 sm:px-5 sm:py-3 rounded-full bg-white border border-black/10 hover:bg-[#edf5ff] text-left transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#0e1111]/20 cursor-pointer active:scale-95 touch-manipulation shadow-sm max-w-[48%] min-h-[44px]"
+            className="flex items-center gap-2 sm:gap-3 p-3 sm:px-5 sm:py-3 rounded-full bg-white dark:bg-white/[0.06] border border-black/10 dark:border-white/15 hover:bg-[#edf5ff] dark:hover:bg-white/12 text-[#0e1111] dark:text-white text-left transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-black/20 dark:focus:ring-white/20 cursor-pointer active:scale-95 touch-manipulation shadow-sm max-w-[48%] min-h-[44px]"
           >
             <ArrowLeft size={16} className="flex-shrink-0" />
             <div className="hidden sm:block truncate">
-              <span className="font-technical text-[9px] uppercase tracking-wider text-[#0e1111]/50 block">Previous</span>
-              <span className="font-display text-xs font-bold text-[#0e1111] truncate block">{prevProject.shortTitle || prevProject.title}</span>
+              <span className="font-technical text-[9px] uppercase tracking-wider text-[#0e1111]/50 dark:text-white/40 block">Previous</span>
+              <span className="font-display text-xs font-bold text-[#0e1111] dark:text-white truncate block">{prevProject.shortTitle || prevProject.title}</span>
             </div>
             <span className="sm:hidden font-technical text-xs uppercase font-bold">Prev</span>
           </button>
@@ -392,12 +392,12 @@ export const ProjectDetails = ({ projectId, onBack, onSelectProject }: ProjectDe
           <button
             type="button"
             onClick={() => onSelectProject(nextProject.id)}
-            className="flex items-center gap-2 sm:gap-3 p-3 sm:px-5 sm:py-3 rounded-full bg-white border border-black/10 hover:bg-[#edf5ff] text-right transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#0e1111]/20 cursor-pointer active:scale-95 touch-manipulation shadow-sm max-w-[48%] min-h-[44px]"
+            className="flex items-center gap-2 sm:gap-3 p-3 sm:px-5 sm:py-3 rounded-full bg-white dark:bg-white/[0.06] border border-black/10 dark:border-white/15 hover:bg-[#edf5ff] dark:hover:bg-white/12 text-[#0e1111] dark:text-white text-right transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-black/20 dark:focus:ring-white/20 cursor-pointer active:scale-95 touch-manipulation shadow-sm max-w-[48%] min-h-[44px]"
           >
             <span className="sm:hidden font-technical text-xs uppercase font-bold">Next</span>
             <div className="hidden sm:block text-right truncate">
-              <span className="font-technical text-[9px] uppercase tracking-wider text-[#0e1111]/50 block">Next</span>
-              <span className="font-display text-xs font-bold text-[#0e1111] truncate block">{nextProject.shortTitle || nextProject.title}</span>
+              <span className="font-technical text-[9px] uppercase tracking-wider text-[#0e1111]/50 dark:text-white/40 block">Next</span>
+              <span className="font-display text-xs font-bold text-[#0e1111] dark:text-white truncate block">{nextProject.shortTitle || nextProject.title}</span>
             </div>
             <ArrowRight size={16} className="flex-shrink-0" />
           </button>
@@ -407,3 +407,4 @@ export const ProjectDetails = ({ projectId, onBack, onSelectProject }: ProjectDe
     </main>
   );
 };
+

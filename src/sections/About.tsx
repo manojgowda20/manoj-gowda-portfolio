@@ -94,19 +94,19 @@ export const About = () => {
   const currentCategoryData = profileCategories.find(c => c.id === activeCategory) || profileCategories[0];
 
   return (
-    <section id="about" className="py-20 lg:py-28 border-t border-[#0e1111]/10 bg-[#edf5ff] text-[#0e1111]">
+    <section id="about" className="scroll-mt-20 py-20 lg:py-28 border-t border-black/10 dark:border-white/10 bg-[#edf5ff] dark:bg-[#070b12] text-[#0e1111] dark:text-white transition-colors duration-300">
       <div className="max-w-6xl mx-auto px-6">
         
         {/* Section Header */}
         <div className="flex flex-col items-start mb-14">
-          <div className="font-technical text-xs uppercase tracking-widest text-[#0e1111]/60 mb-2 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#0e1111]" />
+          <div className="font-technical text-xs uppercase tracking-widest text-[#0e1111]/60 dark:text-white/45 mb-2 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#0e1111] dark:bg-white/40" />
             <span>01 / ABOUT</span>
           </div>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#0e1111]">
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#0e1111] dark:text-white">
             Developer Profile & Summary
           </h2>
-          <p className="font-display text-sm sm:text-base text-[#0e1111]/70 mt-3 max-w-2xl font-light">
+          <p className="font-display text-sm sm:text-base text-[#0e1111]/70 dark:text-white/60 mt-3 max-w-2xl font-light">
             Engineering robust backend services, secure registry portals, and intelligent AI/ML pipelines with clean architecture.
           </p>
         </div>
@@ -116,15 +116,15 @@ export const About = () => {
           
           {/* Left: Summary & Developer Bio */}
           <div className="lg:col-span-6 flex flex-col gap-6">
-            <div className="p-5 sm:p-7 rounded-2xl bg-white border border-black/10 shadow-sm">
-              <h3 className="font-display text-xl font-bold text-[#0e1111] mb-1">
+            <div className="p-5 sm:p-7 rounded-2xl bg-white dark:bg-[#0d1421] border border-black/10 dark:border-white/10 shadow-sm transition-colors duration-300">
+              <h3 className="font-display text-xl font-bold text-[#0e1111] dark:text-white mb-1">
                 {personalInfo.name}
               </h3>
-              <p className="font-technical text-xs uppercase tracking-wider text-[#0e1111]/60 mb-5">
+              <p className="font-technical text-xs uppercase tracking-wider text-[#0e1111]/60 dark:text-white/50 mb-5">
                 {personalInfo.title}
               </p>
               
-              <div className="space-y-4 text-xs sm:text-sm text-[#0e1111]/85 leading-relaxed font-display font-light">
+              <div className="space-y-4 text-xs sm:text-sm text-[#0e1111]/85 dark:text-white/75 leading-relaxed font-display font-light">
                 <p>
                   {personalInfo.bio}
                 </p>
@@ -134,53 +134,53 @@ export const About = () => {
               </div>
 
               {/* Social and Contact Links Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3.5 mt-6 pt-6 border-t border-[#0e1111]/10 font-technical text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3.5 mt-6 pt-6 border-t border-black/10 dark:border-white/10 font-technical text-xs">
                 <a 
                   href={`mailto:${personalInfo.email}`} 
-                  className="flex items-center gap-2 p-2.5 rounded-lg bg-[#edf5ff] hover:bg-black/5 text-[#0e1111] transition-colors"
+                  className="flex items-center gap-2 p-2.5 rounded-lg bg-[#edf5ff] dark:bg-white/[0.05] hover:bg-black/5 dark:hover:bg-white/10 text-[#0e1111] dark:text-white transition-colors"
                 >
-                  <Mail size={14} className="text-[#0e1111]/70 flex-shrink-0" />
+                  <Mail size={14} className="text-[#0e1111]/70 dark:text-white/60 flex-shrink-0" />
                   <span className="truncate">{personalInfo.email}</span>
                 </a>
                 <a 
                   href={`tel:${personalInfo.phone.replace(/\s+/g, '')}`} 
-                  className="flex items-center gap-2 p-2.5 rounded-lg bg-[#edf5ff] hover:bg-black/5 text-[#0e1111] transition-colors"
+                  className="flex items-center gap-2 p-2.5 rounded-lg bg-[#edf5ff] dark:bg-white/[0.05] hover:bg-black/5 dark:hover:bg-white/10 text-[#0e1111] dark:text-white transition-colors"
                 >
-                  <Phone size={14} className="text-[#0e1111]/70 flex-shrink-0" />
+                  <Phone size={14} className="text-[#0e1111]/70 dark:text-white/60 flex-shrink-0" />
                   <span>{personalInfo.phone}</span>
                 </a>
                 <a 
                   href={socialLinks.find(s => s.platform === 'LinkedIn')?.url || '#'} 
                   target="_blank" 
                   rel="noreferrer" 
-                  className="flex items-center gap-2 p-2.5 rounded-lg bg-[#edf5ff] hover:bg-black/5 text-[#0e1111] transition-colors"
+                  className="flex items-center gap-2 p-2.5 rounded-lg bg-[#edf5ff] dark:bg-white/[0.05] hover:bg-black/5 dark:hover:bg-white/10 text-[#0e1111] dark:text-white transition-colors"
                 >
                   <LinkedinIcon />
                   <span className="truncate">LinkedIn Profile</span>
-                  <ArrowUpRight size={12} className="ml-auto opacity-50 flex-shrink-0" />
+                  <ArrowUpRight size={12} className="ml-auto opacity-50 dark:opacity-40 flex-shrink-0" />
                 </a>
                 <a 
                   href={socialLinks.find(s => s.platform === 'GitHub')?.url || '#'} 
                   target="_blank" 
                   rel="noreferrer" 
-                  className="flex items-center gap-2 p-2.5 rounded-lg bg-[#edf5ff] hover:bg-black/5 text-[#0e1111] transition-colors"
+                  className="flex items-center gap-2 p-2.5 rounded-lg bg-[#edf5ff] dark:bg-white/[0.05] hover:bg-black/5 dark:hover:bg-white/10 text-[#0e1111] dark:text-white transition-colors"
                 >
                   <GithubIcon />
                   <span className="truncate">GitHub Repositories</span>
-                  <ArrowUpRight size={12} className="ml-auto opacity-50 flex-shrink-0" />
+                  <ArrowUpRight size={12} className="ml-auto opacity-50 dark:opacity-40 flex-shrink-0" />
                 </a>
               </div>
 
               {/* Download Resume Button */}
-              <div className="mt-6 pt-4 border-t border-[#0e1111]/10 flex flex-wrap items-center justify-between gap-3">
-                <div className="flex items-center gap-1.5 font-technical text-xs text-[#0e1111]/60">
+              <div className="mt-6 pt-4 border-t border-black/10 dark:border-white/10 flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-1.5 font-technical text-xs text-[#0e1111]/60 dark:text-white/45">
                   <MapPin size={13} />
                   <span>{personalInfo.location}</span>
                 </div>
                 <a 
                   href={personalInfo.resumeUrl} 
                   download="Manoj_Gowda_CD_Resume.pdf"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#0e1111] text-white hover:bg-[#0e1111]/90 font-technical text-xs uppercase tracking-wider transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#0e1111] dark:bg-white text-white dark:text-[#070b12] hover:bg-[#0e1111]/90 dark:hover:bg-white/90 font-technical text-xs uppercase tracking-wider transition-all duration-200 font-bold shadow-sm"
                 >
                   <FileDown size={13} />
                   <span>Resume PDF</span>
@@ -191,13 +191,13 @@ export const About = () => {
 
           {/* Right: Interactive Skill Focus Matrix */}
           <div className="lg:col-span-6 flex flex-col">
-            <div className="p-5 sm:p-7 rounded-2xl bg-white border border-black/10 shadow-sm h-full flex flex-col justify-between">
+            <div className="p-5 sm:p-7 rounded-2xl bg-white dark:bg-[#0d1421] border border-black/10 dark:border-white/10 shadow-sm h-full flex flex-col justify-between transition-colors duration-300">
               <div>
-                <div className="flex items-center justify-between pb-4 mb-6 border-b border-[#0e1111]/10">
-                  <span className="font-technical text-xs uppercase tracking-widest text-[#0e1111]/60 font-semibold">
+                <div className="flex items-center justify-between pb-4 mb-6 border-b border-black/10 dark:border-white/10">
+                  <span className="font-technical text-xs uppercase tracking-widest text-[#0e1111]/60 dark:text-white/50 font-semibold">
                     Core Technical Domains
                   </span>
-                  <span className="font-technical text-[10px] uppercase tracking-wider text-[#0e1111]/60 px-2 py-0.5 rounded-full bg-[#edf5ff] border border-black/5">
+                  <span className="font-technical text-[10px] uppercase tracking-wider text-[#0e1111]/60 dark:text-white/40 px-2 py-0.5 rounded-full bg-[#edf5ff] dark:bg-white/[0.06] border border-black/5 dark:border-white/10">
                     Interactive
                   </span>
                 </div>
@@ -215,8 +215,8 @@ export const About = () => {
                         className={cn(
                           'flex items-center gap-1.5 px-3.5 py-1.5 rounded-full font-technical text-xs uppercase tracking-wider transition-all duration-200 whitespace-nowrap flex-shrink-0 sm:flex-shrink cursor-pointer',
                           isActive
-                            ? 'bg-[#0e1111] text-white font-semibold shadow-sm'
-                            : 'bg-[#edf5ff] text-[#0e1111]/70 hover:text-[#0e1111] hover:bg-black/5'
+                            ? 'bg-[#0e1111] dark:bg-[#4f9cf9] text-white font-semibold shadow-sm dark:shadow-[#4f9cf9]/30'
+                            : 'bg-[#edf5ff] dark:bg-white/[0.06] text-[#0e1111]/70 dark:text-white/55 hover:text-[#0e1111] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/12'
                         )}
                       >
                         <span>{cat.icon}</span>
@@ -238,14 +238,14 @@ export const About = () => {
                       className="space-y-4"
                     >
                       <div>
-                        <h4 className="font-display text-base font-bold text-[#0e1111]">
+                        <h4 className="font-display text-base font-bold text-[#0e1111] dark:text-white">
                           {currentCategoryData.name}
                         </h4>
                         <div className="flex flex-wrap gap-1.5 mt-2.5">
                           {currentCategoryData.tags.map((tag) => (
                             <span 
                               key={tag}
-                              className="font-technical text-[10px] uppercase tracking-wider px-2.5 py-1 rounded bg-[#edf5ff] text-[#0e1111] border border-black/5 font-medium"
+                              className="font-technical text-[10px] uppercase tracking-wider px-2.5 py-1 rounded bg-[#edf5ff] dark:bg-white/[0.07] text-[#0e1111] dark:text-white/75 border border-black/5 dark:border-white/[0.08] font-medium"
                             >
                               {tag}
                             </span>
@@ -253,10 +253,10 @@ export const About = () => {
                         </div>
                       </div>
 
-                      <ul className="space-y-2.5 pt-2 font-display text-xs sm:text-sm text-[#0e1111]/80 leading-relaxed font-light">
+                      <ul className="space-y-2.5 pt-2 font-display text-xs sm:text-sm text-[#0e1111]/80 dark:text-white/70 leading-relaxed font-light">
                         {currentCategoryData.points.map((pt, idx) => (
                           <li key={idx} className="flex items-start gap-2.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#0e1111] mt-2 flex-shrink-0" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#0e1111] dark:bg-[#4f9cf9] mt-2 flex-shrink-0" />
                             <span>{pt}</span>
                           </li>
                         ))}
@@ -267,7 +267,7 @@ export const About = () => {
               </div>
 
               {/* Bottom badge */}
-              <div className="pt-4 mt-6 border-t border-[#0e1111]/10 flex items-center justify-between text-xs font-technical text-[#0e1111]/60">
+              <div className="pt-4 mt-6 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-xs font-technical text-[#0e1111]/60 dark:text-white/40">
                 <span>Domain specialization</span>
                 <span>Active 2026</span>
               </div>

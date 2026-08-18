@@ -258,14 +258,14 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
     <div>
       {/* Section Header */}
       <div className="flex flex-col items-start mb-10 text-left">
-        <div className="font-technical text-xs uppercase tracking-widest text-[#0e1111]/60 mb-2 flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#0e1111]" />
+        <div className="font-technical text-xs uppercase tracking-widest text-[#0e1111]/60 dark:text-white/45 mb-2 flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-[#0e1111] dark:bg-white/40" />
           <span>PROJECTS</span>
         </div>
-        <h3 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[#0e1111]">
+        <h3 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[#0e1111] dark:text-white">
           Featured Engineering Projects
         </h3>
-        <p className="font-display text-sm text-[#0e1111]/70 mt-1.5 font-light">
+        <p className="font-display text-sm text-[#0e1111]/70 dark:text-white/60 mt-1.5 font-light">
           Real-world systems built with Python frameworks, database drivers, and deep learning algorithms.
         </p>
       </div>
@@ -285,7 +285,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                 onSelectProject(project.id);
               }
             }}
-            className="p-6 sm:p-8 rounded-3xl bg-white border border-black/10 shadow-[0_4px_20px_rgba(0,0,0,0.04)] sm:hover:-translate-y-2 sm:hover:shadow-[0_20px_35px_-10px_rgba(0,0,0,0.1),0_10px_15px_-5px_rgba(0,0,0,0.04)] sm:hover:border-black/25 focus-visible:-translate-y-2 focus-visible:ring-2 focus-visible:ring-[#0e1111]/20 focus-visible:outline-none transition-all duration-300 ease-out text-left active:scale-[0.99] touch-manipulation group"
+            className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0d1421] border border-black/10 dark:border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.04)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.4)] sm:hover:-translate-y-2 sm:hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.12)] dark:sm:hover:shadow-[0_24px_48px_-12px_rgba(0,0,0,0.6)] sm:hover:border-black/25 dark:sm:hover:border-white/25 focus-visible:-translate-y-2 focus-visible:ring-2 focus-visible:ring-[#0e1111]/20 dark:focus-visible:ring-white/20 focus-visible:outline-none transition-all duration-300 ease-out text-left active:scale-[0.99] touch-manipulation group"
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pointer-events-none">
               
@@ -302,7 +302,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="font-technical text-[10px] uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#edf5ff] text-[#0e1111] border border-black/5 font-semibold"
+                        className="font-technical text-[10px] uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#edf5ff] dark:bg-white/[0.07] text-[#0e1111] dark:text-white/70 border border-black/5 dark:border-white/[0.08] font-semibold"
                       >
                         {tag}
                       </span>
@@ -310,24 +310,24 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                   </div>
 
                   {/* Title */}
-                  <h4 className="font-display text-xl sm:text-2xl font-bold text-[#0e1111] mb-2.5 leading-tight group-hover:text-black transition-colors">
+                  <h4 className="font-display text-xl sm:text-2xl font-bold text-[#0e1111] dark:text-white mb-2.5 leading-tight group-hover:text-[#0e1111] dark:group-hover:text-white transition-colors">
                     {project.title}
                   </h4>
 
                   {/* Description */}
-                  <p className="font-display text-xs sm:text-sm text-[#0e1111]/80 leading-relaxed font-light mb-4">
+                  <p className="font-display text-xs sm:text-sm text-[#0e1111]/80 dark:text-white/70 leading-relaxed font-light mb-4">
                     {project.description}
                   </p>
 
                   {/* Key Features preview */}
                   <div className="mb-6">
-                    <span className="font-technical text-[10px] uppercase tracking-widest text-[#0e1111]/50 block mb-2 font-semibold">
+                    <span className="font-technical text-[10px] uppercase tracking-widest text-[#0e1111]/50 dark:text-white/40 block mb-2 font-semibold">
                       Key Highlights
                     </span>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 font-display text-xs text-[#0e1111]/80 font-light">
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 font-display text-xs text-[#0e1111]/80 dark:text-white/65 font-light">
                       {project.features.slice(0, 4).map((feat, idx) => (
                         <li key={idx} className="flex items-start gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#0e1111] mt-1.5 flex-shrink-0" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#2563eb] dark:bg-[#4f9cf9] mt-1.5 flex-shrink-0" />
                           <span className="line-clamp-2">{feat}</span>
                         </li>
                       ))}
@@ -336,14 +336,14 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                 </div>
 
                 {/* CTA Buttons */}
-                <div className="pt-4 border-t border-[#0e1111]/10 flex flex-wrap items-center gap-3 pointer-events-auto">
+                <div className="pt-4 border-t border-black/10 dark:border-white/10 flex flex-wrap items-center gap-3 pointer-events-auto">
                   <button
                     type="button"
                     onClick={(e) => {
                       e.stopPropagation();
                       onSelectProject(project.id);
                     }}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0e1111] text-white hover:bg-[#0e1111]/90 font-technical text-xs uppercase tracking-wider font-semibold transition-all duration-200 shadow-sm cursor-pointer active:scale-95 touch-manipulation min-h-[42px]"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0e1111] dark:bg-white text-white dark:text-[#070b12] hover:bg-[#0e1111]/90 dark:hover:bg-white/90 font-technical text-xs uppercase tracking-wider font-semibold transition-all duration-200 shadow-sm cursor-pointer active:scale-95 touch-manipulation min-h-[42px]"
                   >
                     <span>View Project</span>
                     <ArrowRight size={13} />
@@ -355,7 +355,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}
-                      className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-[#edf5ff] hover:bg-black/5 text-[#0e1111] border border-black/10 font-technical text-xs uppercase tracking-wider font-medium transition-colors cursor-pointer active:scale-95 touch-manipulation min-h-[42px]"
+                      className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-[#edf5ff] dark:bg-white/[0.07] hover:bg-black/5 dark:hover:bg-white/15 text-[#0e1111] dark:text-white border border-black/10 dark:border-white/10 font-technical text-xs uppercase tracking-wider font-medium transition-colors cursor-pointer active:scale-95 touch-manipulation min-h-[42px]"
                     >
                       <span>Live Demo</span>
                       <ExternalLink size={12} />
@@ -368,7 +368,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}
-                      className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-[#edf5ff] hover:bg-black/5 text-[#0e1111] border border-black/10 font-technical text-xs uppercase tracking-wider font-medium transition-colors cursor-pointer active:scale-95 touch-manipulation min-h-[42px]"
+                      className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-[#edf5ff] dark:bg-white/[0.07] hover:bg-black/5 dark:hover:bg-white/15 text-[#0e1111] dark:text-white border border-black/10 dark:border-white/10 font-technical text-xs uppercase tracking-wider font-medium transition-colors cursor-pointer active:scale-95 touch-manipulation min-h-[42px]"
                     >
                       <GithubIcon />
                       <span>Code</span>
@@ -385,3 +385,4 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
     </div>
   );
 };
+

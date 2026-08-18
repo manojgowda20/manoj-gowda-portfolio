@@ -5,41 +5,65 @@
 @tailwind utilities;
 
 :root {
+  /* Default (Light) theme variables */
   --background-base: #edf5ff;
   --background-card: #ffffff;
+  --background-card-inner: #edf5ff;
   --text-primary: #0e1111;
   --text-secondary: rgba(14, 17, 17, 0.75);
-  --text-muted: rgba(14, 17, 17, 0.55);
+  --text-muted: rgba(14, 17, 17, 0.5);
+  --border-subtle: rgba(14, 17, 17, 0.1);
+  --accent-blue: #2563eb;
+  --cursor-color: #0e1111;
+  --cursor-text: #ffffff;
+  --cursor-glow: rgba(0, 0, 0, 0.25);
+}
+
+html.dark, :root[data-theme="dark"] {
+  /* Dark theme variables */
+  --background-base: #070b12;
+  --background-card: #0d1421;
+  --background-card-inner: rgba(255, 255, 255, 0.04);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-muted: rgba(255, 255, 255, 0.45);
+  --border-subtle: rgba(255, 255, 255, 0.1);
+  --accent-blue: #4f9cf9;
+  --cursor-color: #ffffff;
+  --cursor-text: #070b12;
+  --cursor-glow: rgba(255, 255, 255, 0.7);
 }
 
 html {
   scroll-behavior: smooth;
-  background-color: #edf5ff;
-  color: #0e1111;
+  background-color: var(--background-base);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body {
-  background-color: #edf5ff;
-  color: #0e1111;
+  background-color: var(--background-base);
+  color: var(--text-primary);
   font-family: 'Albert Sans', 'Plus Jakarta Sans', system-ui, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Scrollbar Styling */
 ::-webkit-scrollbar {
-  width: 7px;
+  width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #edf5ff;
+  background: var(--background-base);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(14, 17, 17, 0.2);
+  background: var(--border-subtle);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(14, 17, 17, 0.35);
+  background: var(--text-muted);
 }
 
 /* ─── CUSTOM CURSOR (desktop fine-pointer only) ─────────────────────── */
@@ -50,47 +74,48 @@ body {
     cursor: none !important;
   }
 
-  /* Outer ring — transitions size and shape smoothly */
+  /* Outer ring / dot — stays visible during scrolling and fast movement */
   .cc-ring {
     position: fixed;
     top: 0;
     left: 0;
     pointer-events: none;
-    z-index: 99999;
-    /* Centred on cursor tip via translate */
+    z-index: 999999;
     will-change: transform;
+    opacity: 1;
   }
 
   .cc-ring-inner {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
-    background-color: #0e1111;
-    border: 1.5px solid transparent;
+    background-color: var(--cursor-color, #ffffff);
+    border: 1.5px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 12px var(--cursor-glow, rgba(255, 255, 255, 0.7));
     overflow: hidden;
-    /* Smooth size/colour transitions */
+    /* Smooth transitions */
     transition:
-      width  0.28s cubic-bezier(0.16, 1, 0.3, 1),
+      width 0.28s cubic-bezier(0.16, 1, 0.3, 1),
       height 0.28s cubic-bezier(0.16, 1, 0.3, 1),
       background-color 0.2s ease,
       border-color 0.2s ease,
-      opacity 0.2s ease;
+      box-shadow 0.2s ease;
   }
 
   /* "VIEW" label inside cursor */
   .cc-label {
     font-family: 'Fragment Mono', monospace;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    color: #ffffff;
+    font-size: 9.5px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--cursor-text, #070b12);
     text-transform: uppercase;
     white-space: nowrap;
     opacity: 0;
-    transform: scale(0.7);
+    transform: scale(0.6);
     transition:
       opacity 0.18s ease,
       transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
@@ -100,22 +125,64 @@ body {
 
   /* ── STATE: pointer (buttons / links) ── */
   .cc-ring[data-state="pointer"] .cc-ring-inner {
-    width: 34px;
-    height: 34px;
-    background-color: transparent;
+    width: 38px;
+    height: 38px;
+    background-color: rgba(255, 255, 255, 0.15);
+    border: 2px solid var(--cursor-color, #ffffff);
+    backdrop-filter: blur(2px);
+    box-shadow: 0 0 16px var(--cursor-glow, rgba(255, 255, 255, 0.5));
+  }
+
+  /* In light mode, subtle dark tint for pointer state */
+  html.light .cc-ring[data-state="pointer"] .cc-ring-inner {
+    background-color: rgba(14, 17, 17, 0.1);
     border-color: #0e1111;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
   }
 
   /* ── STATE: view (project cards) ── */
   .cc-ring[data-state="view"] .cc-ring-inner {
-    width: 60px;
-    height: 60px;
-    background-color: #0e1111;
-    border-color: transparent;
+    width: 64px;
+    height: 64px;
+    background-color: var(--cursor-color, #ffffff);
+    border: 1.5px solid transparent;
+    box-shadow: 0 0 24px var(--cursor-glow, rgba(255, 255, 255, 0.8));
   }
 
   .cc-ring[data-state="view"] .cc-label {
     opacity: 1;
     transform: scale(1);
   }
+}
+
+/* ─── GLITTER SPARKLE PARTICLES ─────────────────────────────────────── */
+@keyframes sparkle-pop {
+  0% {
+    transform: translate(-50%, -50%) scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  60% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(
+        calc(-50% + var(--sx, 0px)),
+        calc(-50% + var(--sy, 0px))
+      )
+      scale(0) rotate(var(--sr, 120deg));
+    opacity: 0;
+  }
+}
+
+.glitter-particle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99998;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  animation: sparkle-pop var(--dur, 0.55s) ease-out forwards;
+  will-change: transform, opacity;
 }

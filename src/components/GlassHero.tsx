@@ -1,7 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { ChevronDown, Menu, X, ArrowUpRight } from 'lucide-react';
+import { ChevronDown, Menu, X, ArrowUpRight, Sun, Moon } from 'lucide-react';
 import { personalInfo } from '../data/portfolio';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useTheme } from '../context/ThemeContext';
 
 interface GlassHeroProps {
   onNavigate?: (sectionId: string) => void;
@@ -12,6 +13,7 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
   const revealRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   // Ensure video autoplays smoothly across mobile and desktop browsers
   useEffect(() => {
@@ -459,8 +461,19 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
           </button>
         </div>
 
-        {/* Mobile menu toggle & WhatsApp CTA */}
-        <div className="flex items-center gap-2">
+        {/* Theme Toggle, Mobile menu toggle & WhatsApp CTA */}
+        <div className="flex items-center gap-2.5">
+          {/* Theme Toggle in Hero */}
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="p-2.5 rounded-full bg-black/60 backdrop-blur-xl border border-white/20 text-amber-300 hover:text-amber-200 hover:bg-black/80 shadow-lg flex items-center justify-center cursor-pointer active:scale-90 transition-transform touch-manipulation min-w-[38px] min-h-[38px]"
+            title={theme === 'dark' ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            aria-label={theme === 'dark' ? "Switch to Light Mode" : "Switch to Dark Mode"}
+          >
+            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} className="text-sky-300" />}
+          </button>
+
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -500,6 +513,20 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
                 <ArrowUpRight size={15} className="opacity-60 text-white" />
               </button>
             ))}
+
+            <div className="pt-2 mt-1 border-t border-white/10">
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="w-full text-left p-3 rounded-xl bg-white/10 hover:bg-white/20 flex items-center justify-between transition-colors cursor-pointer min-h-[44px] touch-manipulation text-white"
+              >
+                <span className="flex items-center gap-2">
+                  {theme === 'dark' ? <Sun size={15} className="text-amber-300" /> : <Moon size={15} className="text-sky-300" />}
+                  <span>Theme: {theme === 'dark' ? 'Dark Mode' : 'Light Mode'}</span>
+                </span>
+                <span className="text-[10px] opacity-60">Toggle</span>
+              </button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
