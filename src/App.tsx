@@ -8,20 +8,13 @@ import { Education } from './sections/Education';
 import { Footer } from './components/Footer';
 import { ProjectDetails } from './components/ProjectDetails';
 import { CustomCursor } from './components/CustomCursor';
+import { smoothScrollTo } from './utils/scroll';
 
 function App() {
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState<string>('home');
   // Track which section to scroll to after closing project view
   const pendingScrollTarget = useRef<string | null>(null);
-
-  const scrollToTarget = (targetId: string) => {
-    const el = document.getElementById(targetId);
-    if (el) {
-      const topOffset = el.getBoundingClientRect().top + window.scrollY - 70;
-      window.scrollTo({ top: Math.max(0, topOffset), behavior: 'smooth' });
-    }
-  };
 
   // After project view unmounts and main page mounts, execute pending scroll
   useEffect(() => {
@@ -31,7 +24,7 @@ function App() {
       // Double requestAnimationFrame ensures the DOM has painted before measuring
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          scrollToTarget(target);
+          smoothScrollTo(target);
         });
       });
     }
@@ -49,7 +42,7 @@ function App() {
           pendingScrollTarget.current = hash;
           setSelectedProjectId(null);
         } else {
-          scrollToTarget(hash);
+          smoothScrollTo(hash);
         }
       } else if (hash === '' || hash === 'home') {
         setSelectedProjectId(null);
@@ -75,7 +68,7 @@ function App() {
     };
 
     const observer = new IntersectionObserver(observerCallback, {
-      rootMargin: '-30% 0px -50% 0px',
+      rootMargin: '-20% 0px -40% 0px',
       threshold: 0
     });
 
@@ -106,8 +99,7 @@ function App() {
       window.location.hash = sectionId;
     }
 
-    // Scroll immediately
-    scrollToTarget(sectionId);
+    smoothScrollTo(sectionId);
   };
 
   const handleSelectProject = (projectId: string) => {

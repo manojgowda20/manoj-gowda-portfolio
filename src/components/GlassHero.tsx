@@ -3,6 +3,7 @@ import { ChevronDown, Menu, X, ArrowUpRight, Sun, Moon } from 'lucide-react';
 import { personalInfo } from '../data/portfolio';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
+import { smoothScrollTo } from '../utils/scroll';
 
 interface GlassHeroProps {
   onNavigate?: (sectionId: string) => void;
@@ -168,15 +169,12 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
 
   const scrollToSection = (id: string) => {
     setMobileMenuOpen(false);
-    const element = document.getElementById(id);
-    if (element) {
-      const topOffset = element.getBoundingClientRect().top + window.pageYOffset - 70;
-      window.scrollTo({ top: Math.max(0, topOffset), behavior: 'smooth' });
-    }
+    smoothScrollTo(id);
     if (onNavigate) {
       onNavigate(id);
     }
   };
+
 
   return (
     <div
