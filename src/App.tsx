@@ -73,8 +73,11 @@ function App() {
       }
       setTimeout(() => {
         const el = document.getElementById(sectionId);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }, 50);
+        if (el) {
+          const topOffset = el.getBoundingClientRect().top + window.pageYOffset - 70;
+          window.scrollTo({ top: Math.max(0, topOffset), behavior: 'smooth' });
+        }
+      }, 60);
       return;
     }
 
@@ -85,7 +88,8 @@ function App() {
     }
     const el = document.getElementById(sectionId);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+      const topOffset = el.getBoundingClientRect().top + window.pageYOffset - 70;
+      window.scrollTo({ top: Math.max(0, topOffset), behavior: 'smooth' });
     }
   };
 

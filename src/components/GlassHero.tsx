@@ -229,9 +229,11 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
         @media (max-width: 767px) and (orientation: portrait) {
           .hero-base {
             background-image: url('/images/Base_image_mobile.png');
+            background-position: 60% 15%;
           }
           .hero-reveal {
             background-image: url('/images/Reveal_image_mobile.png');
+            background-position: 60% 15%;
           }
         }
 
@@ -354,7 +356,7 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
           playsInline
           preload="auto"
           poster="/images/Base_image_desktop.png"
-          className="absolute w-[126%] h-[126%] -left-[13%] -top-[13%] max-w-none object-cover object-[62%_center] md:w-[114%] md:h-[114%] md:-left-[7%] md:-top-[7%] md:object-center pointer-events-none"
+          className="absolute w-[116%] h-[116%] -left-[8%] top-[1%] max-w-none object-cover object-[60%_15%] md:w-[112%] md:h-[112%] md:-left-[6%] md:top-[1%] md:object-center pointer-events-none"
         >
           <source src="/images/hero.mp4" type="video/mp4" />
           <source src="/images/Man_walking_toward_camera_202608181141.mp4" type="video/mp4" />
