@@ -115,8 +115,9 @@ export const Navbar = ({ activeSection, onNavigate }: NavbarProps) => {
 
         {/* Mobile Hamburger Button */}
         <button
+          type="button"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="p-2 md:hidden text-[#0e1111] hover:bg-black/5 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-[#0e1111]/20"
+          className="p-2.5 md:hidden text-[#0e1111] hover:bg-black/5 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-[#0e1111]/20 cursor-pointer active:scale-90 touch-manipulation min-w-[40px] min-h-[40px] flex items-center justify-center"
           aria-expanded={mobileMenuOpen}
           aria-controls="mobile-nav-panel"
           aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
@@ -142,12 +143,13 @@ export const Navbar = ({ activeSection, onNavigate }: NavbarProps) => {
                 return (
                   <button
                     key={item.id}
+                    type="button"
                     onClick={() => handleItemClick(item.id)}
                     className={cn(
-                      'text-left py-2 px-3 rounded-lg transition-colors',
+                      'text-left py-3 px-3.5 rounded-lg transition-colors min-h-[44px] touch-manipulation cursor-pointer flex items-center',
                       isCurrent 
                         ? 'bg-black/5 text-[#0e1111] font-bold border-l-2 border-[#0e1111]' 
-                        : 'text-[#0e1111]/70 hover:text-[#0e1111]'
+                        : 'text-[#0e1111]/70 hover:text-[#0e1111] active:bg-black/5'
                     )}
                   >
                     {item.label}
@@ -159,11 +161,11 @@ export const Navbar = ({ activeSection, onNavigate }: NavbarProps) => {
                 <a
                   href={personalInfo.whatsappUrl}
                   target="_blank"
-                  rel="noreferrer"
-                  className="w-full py-2.5 bg-white text-[#0e1111] border border-black/10 rounded-lg text-center font-semibold shadow-sm flex items-center justify-center gap-1.5"
+                  rel="noopener noreferrer"
+                  className="w-full py-3 bg-[#0e1111] text-white border border-black/10 rounded-lg text-center font-bold shadow-sm flex items-center justify-center gap-1.5 min-h-[44px] touch-manipulation active:scale-95 transition-transform"
                 >
                   <span>Let's talk</span>
-                  <ArrowUpRight size={13} />
+                  <ArrowUpRight size={14} />
                 </a>
               </div>
             </nav>

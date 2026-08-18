@@ -263,8 +263,9 @@ export const Projects = ({ onSelectProject }: ProjectsProps) => {
                 {/* CTA Buttons */}
                 <div className="pt-4 border-t border-[#0e1111]/10 flex flex-wrap items-center gap-3">
                   <button
+                    type="button"
                     onClick={() => onSelectProject(project.id)}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#0e1111] text-white hover:bg-[#0e1111]/90 font-technical text-xs uppercase tracking-wider font-semibold transition-all duration-200 shadow-sm"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#0e1111] text-white hover:bg-[#0e1111]/90 font-technical text-xs uppercase tracking-wider font-semibold transition-all duration-200 shadow-sm cursor-pointer active:scale-95 touch-manipulation min-h-[40px]"
                   >
                     <span>View Project</span>
                     <ArrowRight size={13} />
@@ -274,8 +275,8 @@ export const Projects = ({ onSelectProject }: ProjectsProps) => {
                     <a
                       href={project.liveUrl}
                       target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-[#edf5ff] hover:bg-black/5 text-[#0e1111] border border-black/10 font-technical text-xs uppercase tracking-wider font-medium transition-colors"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-full bg-[#edf5ff] hover:bg-black/5 text-[#0e1111] border border-black/10 font-technical text-xs uppercase tracking-wider font-medium transition-colors cursor-pointer active:scale-95 touch-manipulation min-h-[40px]"
                     >
                       <span>Live Demo</span>
                       <ExternalLink size={12} />
@@ -286,8 +287,8 @@ export const Projects = ({ onSelectProject }: ProjectsProps) => {
                     <a
                       href={project.githubUrl}
                       target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-[#edf5ff] hover:bg-black/5 text-[#0e1111] border border-black/10 font-technical text-xs uppercase tracking-wider font-medium transition-colors"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-full bg-[#edf5ff] hover:bg-black/5 text-[#0e1111] border border-black/10 font-technical text-xs uppercase tracking-wider font-medium transition-colors cursor-pointer active:scale-95 touch-manipulation min-h-[40px]"
                     >
                       <GithubIcon />
                       <span>Code</span>

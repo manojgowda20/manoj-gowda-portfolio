@@ -214,10 +214,11 @@ export const ProjectDetails = ({ projectId, onBack, onSelectProject }: ProjectDe
         
         {/* Back button */}
         <button
+          type="button"
           onClick={onBack}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-black/10 text-[#0e1111] hover:bg-[#edf5ff] font-technical text-xs uppercase tracking-wider font-semibold shadow-sm transition-all duration-200 mb-8 focus:outline-none focus:ring-2 focus:ring-[#0e1111]/20 cursor-pointer"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-black/10 text-[#0e1111] hover:bg-[#edf5ff] font-technical text-xs uppercase tracking-wider font-semibold shadow-sm transition-all duration-200 mb-8 focus:outline-none focus:ring-2 focus:ring-[#0e1111]/20 cursor-pointer active:scale-95 touch-manipulation min-h-[44px]"
         >
-          <ArrowLeft size={14} />
+          <ArrowLeft size={15} />
           <span>Back to Projects</span>
         </button>
 
@@ -248,14 +249,14 @@ export const ProjectDetails = ({ projectId, onBack, onSelectProject }: ProjectDe
               <a
                 href={project.liveUrl}
                 target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0e1111] text-white hover:bg-[#0e1111]/90 font-technical text-xs uppercase tracking-wider font-semibold transition-all duration-200 shadow-sm"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0e1111] text-white hover:bg-[#0e1111]/90 font-technical text-xs uppercase tracking-wider font-semibold transition-all duration-200 shadow-sm cursor-pointer active:scale-95 touch-manipulation min-h-[44px]"
               >
                 <span>Live Demonstration</span>
                 <ExternalLink size={13} />
               </a>
             ) : (
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#edf5ff] text-[#0e1111]/50 border border-black/5 font-technical text-xs uppercase tracking-wider select-none">
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#edf5ff] text-[#0e1111]/50 border border-black/5 font-technical text-xs uppercase tracking-wider select-none min-h-[40px]">
                 <span>Demo (Local Setup)</span>
               </span>
             )}
@@ -264,14 +265,14 @@ export const ProjectDetails = ({ projectId, onBack, onSelectProject }: ProjectDe
               <a
                 href={project.githubUrl}
                 target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#edf5ff] hover:bg-black/5 text-[#0e1111] border border-black/10 font-technical text-xs uppercase tracking-wider font-semibold transition-colors"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#edf5ff] hover:bg-black/5 text-[#0e1111] border border-black/10 font-technical text-xs uppercase tracking-wider font-semibold transition-colors cursor-pointer active:scale-95 touch-manipulation min-h-[44px]"
               >
                 <GithubIcon />
                 <span>GitHub Repository</span>
               </a>
             ) : (
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#edf5ff] text-[#0e1111]/50 border border-black/5 font-technical text-xs uppercase tracking-wider select-none">
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#edf5ff] text-[#0e1111]/50 border border-black/5 font-technical text-xs uppercase tracking-wider select-none min-h-[40px]">
                 <GithubIcon />
                 <span>Private Codebase</span>
               </span>
@@ -370,8 +371,9 @@ export const ProjectDetails = ({ projectId, onBack, onSelectProject }: ProjectDe
         {/* Previous / Next Project Navigation Footer */}
         <div className="pt-8 border-t border-[#0e1111]/10 flex items-center justify-between gap-4">
           <button
+            type="button"
             onClick={() => onSelectProject(prevProject.id)}
-            className="flex items-center gap-2 sm:gap-3 p-3 sm:px-5 sm:py-3 rounded-full bg-white border border-black/10 hover:bg-[#edf5ff] text-left transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#0e1111]/20 cursor-pointer shadow-sm max-w-[48%]"
+            className="flex items-center gap-2 sm:gap-3 p-3 sm:px-5 sm:py-3 rounded-full bg-white border border-black/10 hover:bg-[#edf5ff] text-left transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#0e1111]/20 cursor-pointer active:scale-95 touch-manipulation shadow-sm max-w-[48%] min-h-[44px]"
           >
             <ArrowLeft size={16} className="flex-shrink-0" />
             <div className="hidden sm:block truncate">
@@ -382,8 +384,9 @@ export const ProjectDetails = ({ projectId, onBack, onSelectProject }: ProjectDe
           </button>
 
           <button
+            type="button"
             onClick={() => onSelectProject(nextProject.id)}
-            className="flex items-center gap-2 sm:gap-3 p-3 sm:px-5 sm:py-3 rounded-full bg-white border border-black/10 hover:bg-[#edf5ff] text-right transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#0e1111]/20 cursor-pointer shadow-sm max-w-[48%]"
+            className="flex items-center gap-2 sm:gap-3 p-3 sm:px-5 sm:py-3 rounded-full bg-white border border-black/10 hover:bg-[#edf5ff] text-right transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#0e1111]/20 cursor-pointer active:scale-95 touch-manipulation shadow-sm max-w-[48%] min-h-[44px]"
           >
             <span className="sm:hidden font-technical text-xs uppercase font-bold">Next</span>
             <div className="hidden sm:block text-right truncate">
