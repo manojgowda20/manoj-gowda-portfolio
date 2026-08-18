@@ -267,8 +267,14 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
         }
 
         @keyframes heroFadeIn {
-          from { opacity: 0; transform: scale(1.035); }
+          from { opacity: 0; transform: scale(1.05); }
           to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes cinematicFloat {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.025) translateY(-4px); }
+          100% { transform: scale(1); }
         }
 
         @keyframes fadeDown {
@@ -287,7 +293,7 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
         }
 
         .animate-hero-image {
-          animation: heroFadeIn 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation: heroFadeIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards, cinematicFloat 18s ease-in-out infinite 1.4s;
         }
 
         .animate-nav {
@@ -321,8 +327,19 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
         }
       `}</style>
 
-      {/* LAYER 1: Base Portrait */}
-      <div aria-hidden="true" className="hero-base animate-hero-image" />
+      {/* LAYER 1: Base Portrait / Video Background (scaled to crop out any Gemini/AI corner watermarks) */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        poster="/images/Base_image_desktop.png"
+        className="absolute inset-0 w-full h-full object-cover z-[1] pointer-events-none scale-[1.16] sm:scale-[1.12] origin-center"
+      >
+        <source src="/images/hero.mp4" type="video/mp4" />
+        <source src="/images/Man_walking_toward_camera_202608181141.mp4" type="video/mp4" />
+      </video>
+      <div aria-hidden="true" className="hero-base animate-hero-image" style={{ zIndex: 0 }} />
 
       {/* LAYER 2: Reveal Portrait */}
       <div ref={revealRef} aria-hidden="true" className="hero-reveal animate-hero-image" />
