@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { GlassHero } from './components/GlassHero';
 import { Navbar } from './components/Navbar';
 import { About } from './sections/About';
@@ -7,10 +7,31 @@ import { Skills } from './sections/Skills';
 import { Education } from './sections/Education';
 import { Footer } from './components/Footer';
 import { ProjectDetails } from './components/ProjectDetails';
+import { CustomCursor } from './components/CustomCursor';
 
 function App() {
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState<string>('home');
+  // Track which section to scroll to after closing project view
+  const pendingScrollTarget = useRef<string | null>(null);
+
+  // After project view unmounts and main page mounts, execute pending scroll
+  useEffect(() => {
+    if (!selectedProjectId && pendingScrollTarget.current) {
+      const target = pendingScrollTarget.current;
+      pendingScrollTarget.current = null;
+      // Give the main page DOM time to mount
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const el = document.getElementById(target);
+          if (el) {
+            const topOffset = el.getBoundingClientRect().top + window.pageYOffset - 70;
+            window.scrollTo({ top: Math.max(0, topOffset), behavior: 'smooth' });
+          }
+        });
+      });
+    }
+  }, [selectedProjectId]);
 
   // Handle URL hash changes for deep linking to sections or projects
   useEffect(() => {
@@ -21,12 +42,7 @@ function App() {
         window.scrollTo({ top: 0, behavior: 'instant' as any });
       } else if (['about', 'work', 'skills', 'education'].includes(hash)) {
         setSelectedProjectId(null);
-        setTimeout(() => {
-          const el = document.getElementById(hash);
-          if (el) {
-            el.scrollIntoView({ behavior: 'smooth' });
-          }
-        }, 50);
+        pendingScrollTarget.current = hash;
       } else if (hash === '' || hash === 'home') {
         setSelectedProjectId(null);
       }
@@ -65,24 +81,19 @@ function App() {
 
   const handleNavigate = (sectionId: string) => {
     if (selectedProjectId) {
+      // We're on project view — need to go back to main page first, then scroll
+      pendingScrollTarget.current = sectionId;
       setSelectedProjectId(null);
       try {
-        window.history.pushState("", document.title, window.location.pathname + `#${sectionId}`);
+        window.history.pushState('', document.title, window.location.pathname + `#${sectionId}`);
       } catch {
-        window.location.hash = sectionId;
+        // ignore
       }
-      setTimeout(() => {
-        const el = document.getElementById(sectionId);
-        if (el) {
-          const topOffset = el.getBoundingClientRect().top + window.pageYOffset - 70;
-          window.scrollTo({ top: Math.max(0, topOffset), behavior: 'smooth' });
-        }
-      }, 60);
       return;
     }
 
     try {
-      window.history.pushState("", document.title, window.location.pathname + `#${sectionId}`);
+      window.history.pushState('', document.title, window.location.pathname + `#${sectionId}`);
     } catch {
       window.location.hash = sectionId;
     }
@@ -95,28 +106,30 @@ function App() {
 
   const handleSelectProject = (projectId: string) => {
     setSelectedProjectId(projectId);
-    window.location.hash = projectId;
+    try {
+      window.history.pushState('', document.title, window.location.pathname + `#${projectId}`);
+    } catch {
+      window.location.hash = projectId;
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleBackToProjects = () => {
+    pendingScrollTarget.current = 'work';
     setSelectedProjectId(null);
     try {
-      window.history.pushState("", document.title, window.location.pathname + '#work');
+      window.history.pushState('', document.title, window.location.pathname + '#work');
     } catch {
       window.location.hash = 'work';
     }
-    setTimeout(() => {
-      const el = document.getElementById('work');
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 50);
   };
 
   if (selectedProjectId) {
     return (
       <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#edf5ff] text-[#0e1111] font-display">
+        {/* Premium custom cursor — desktop only, pointer-events: none */}
+        <CustomCursor />
+        <Navbar activeSection="work" onNavigate={handleNavigate} isProjectView={true} />
         <ProjectDetails
           projectId={selectedProjectId}
           onBack={handleBackToProjects}
@@ -129,6 +142,9 @@ function App() {
 
   return (
     <div className="relative min-h-screen w-full max-w-full overflow-x-hidden bg-[#edf5ff] text-[#0e1111] font-display">
+      {/* Premium custom cursor — desktop only, pointer-events: none */}
+      <CustomCursor />
+
       {/* Sticky Top Navbar */}
       <Navbar activeSection={activeSection} onNavigate={handleNavigate} />
 

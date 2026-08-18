@@ -7,9 +7,10 @@ import { personalInfo } from '../data/portfolio';
 interface NavbarProps {
   activeSection: string;
   onNavigate: (sectionId: string) => void;
+  isProjectView?: boolean;
 }
 
-export const Navbar = ({ activeSection, onNavigate }: NavbarProps) => {
+export const Navbar = ({ activeSection, onNavigate, isProjectView = false }: NavbarProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -41,21 +42,19 @@ export const Navbar = ({ activeSection, onNavigate }: NavbarProps) => {
 
   const handleItemClick = (id: string) => {
     setMobileMenuOpen(false);
-    setTimeout(() => {
-      const element = document.getElementById(id);
-      if (element) {
-        const topOffset = element.getBoundingClientRect().top + window.pageYOffset - 70;
-        window.scrollTo({ top: Math.max(0, topOffset), behavior: 'smooth' });
-      }
-      onNavigate(id);
-    }, 80);
+    // Delegate all navigation to parent — App.tsx handles
+    // both "scroll on main page" and "go back to main then scroll"
+    onNavigate(id);
   };
+
+  const showNavbar = isScrolled || isProjectView;
+
 
   return (
     <header
       className={cn(
         'fixed top-0 left-0 w-full z-[100] transition-all duration-300 pointer-events-none',
-        isScrolled 
+        showNavbar 
           ? 'py-3 bg-white/95 backdrop-blur-md border-b border-black/15 shadow-sm pointer-events-auto opacity-100 translate-y-0' 
           : 'py-5 bg-transparent opacity-0 -translate-y-4 pointer-events-none'
       )}

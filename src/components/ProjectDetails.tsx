@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { ArrowLeft, ArrowRight, ExternalLink, HelpCircle, Laptop, Settings, Wrench, ShieldAlert, Database, CheckCircle2 } from 'lucide-react';
 import { projectsData } from '../data/portfolio';
 
@@ -208,9 +209,14 @@ export const ProjectDetails = ({ projectId, onBack, onSelectProject }: ProjectDe
   const nextProject = projectsData[(currentIndex + 1) % projectsData.length];
   const prevProject = projectsData[(currentIndex - 1 + projectsData.length) % projectsData.length];
 
+  // Scroll to top whenever the viewed project changes (prev/next navigation)
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [projectId]);
+
   return (
-    <main className="min-h-screen bg-[#edf5ff] text-[#0e1111] py-12 sm:py-16 px-4 sm:px-6 select-text">
-      <div className="max-w-5xl mx-auto">
+    <main className="min-h-screen w-full max-w-full bg-[#edf5ff] text-[#0e1111] pt-24 sm:pt-28 pb-12 sm:pb-16 px-4 sm:px-6 select-text">
+      <div className="max-w-5xl mx-auto w-full">
         
         {/* Back button */}
         <button

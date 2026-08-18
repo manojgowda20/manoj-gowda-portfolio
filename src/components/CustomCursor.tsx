@@ -1,198 +1,141 @@
-import { useEffect, useRef, useState } from 'react';
-import { cn } from '../utils/cn';
+import { useEffect, useRef } from 'react';
 
+type CursorState = 'default' | 'pointer' | 'view';
+
+/**
+ * CustomCursor — premium minimal cursor for desktop fine-pointer devices.
+ *
+ * Implementation notes:
+ *  • All position/state updates go directly to the DOM via refs — zero React
+ *    re-renders during cursor movement.
+ *  • requestAnimationFrame loop lerps smoothed position toward raw mouse
+ *    position for a soft, premium feel.
+ *  • document.elementFromPoint() on each frame determines the cursor state
+ *    by reading data-cursor attributes, so no prop-drilling is needed.
+ *  • pointer-events: none on the cursor element ensures nothing is blocked.
+ *  • Activated only when (hover: hover) and (pointer: fine) matches, so
+ *    mobile / touchscreen devices are completely unaffected.
+ */
 export const CustomCursor = () => {
-  const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
-  const mouse = useRef({ x: 0, y: 0 });
-  const dotPos = useRef({ x: 0, y: 0 });
-  const ringPos = useRef({ x: 0, y: 0 });
-  const [cursorState, setCursorState] = useState<'default' | 'button' | 'link' | 'card'>('default');
-  const [isVisible, setIsVisible] = useState(false);
-  const [disabled, setDisabled] = useState(true); // Disable by default until checks pass
 
   useEffect(() => {
-    // 1. Safeguard Checks: Disable on touch devices, mobile screens, or reduced motion queries
-    const touchQuery = window.matchMedia('(pointer: coarse)');
-    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const isMobileViewport = window.innerWidth < 768;
+    // Only activate for real mouse / fine-pointer devices
+    const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!isFinePointer) return;
 
-    const checkEligibility = () => {
-      const eligibility = !touchQuery.matches && !motionQuery.matches && !isMobileViewport;
-      setDisabled(!eligibility);
-      
-      // Inject global styling to hide the default browser cursor when custom cursor is active
-      if (eligibility) {
-        document.body.classList.add('custom-cursor-active');
-      } else {
-        document.body.classList.remove('custom-cursor-active');
+    const ring = ringRef.current;
+    if (!ring) return;
+
+    // ── Position tracking ────────────────────────────────────────────────
+    let rawX = -200;
+    let rawY = -200;
+    let smoothX = -200;
+    let smoothY = -200;
+
+    // ── State tracking ───────────────────────────────────────────────────
+    let currentState: CursorState = 'default';
+    let rafId: number;
+    let isVisible = false;
+
+    // ── Helpers ──────────────────────────────────────────────────────────
+    const LERP = 0.15; // smoothing factor (0 = no movement, 1 = instant)
+
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+    const resolveState = (x: number, y: number): CursorState => {
+      // Use elementFromPoint on the smoothed position
+      const el = document.elementFromPoint(x, y) as HTMLElement | null;
+      if (!el) return 'default';
+
+      // Project card — check for our data attribute
+      if (el.closest('[data-cursor="view"]')) return 'view';
+
+      // Clickable elements: buttons, anchors, [role=button]
+      if (
+        el.closest('a') ||
+        el.closest('button') ||
+        el.closest('[role="button"]') ||
+        el.closest('[tabindex]')
+      ) {
+        return 'pointer';
+      }
+
+      return 'default';
+    };
+
+    // ── rAF animation loop ───────────────────────────────────────────────
+    const tick = () => {
+      // Smooth lerp toward raw target
+      smoothX = lerp(smoothX, rawX, LERP);
+      smoothY = lerp(smoothY, rawY, LERP);
+
+      // Apply position (translate centres the ring on the cursor point)
+      ring.style.transform = `translate3d(${smoothX}px, ${smoothY}px, 0) translate(-50%, -50%)`;
+
+      // Determine and apply state (avoid redundant DOM writes)
+      const nextState = resolveState(Math.round(smoothX), Math.round(smoothY));
+      if (nextState !== currentState) {
+        ring.setAttribute('data-state', nextState);
+        currentState = nextState;
+      }
+
+      rafId = requestAnimationFrame(tick);
+    };
+
+    // ── Event listeners ──────────────────────────────────────────────────
+    const onMouseMove = (e: MouseEvent) => {
+      rawX = e.clientX;
+      rawY = e.clientY;
+
+      // Show cursor on first movement
+      if (!isVisible) {
+        isVisible = true;
+        ring.style.opacity = '1';
+        // Snap to position immediately on first move so it does not slide in from off-screen
+        smoothX = rawX;
+        smoothY = rawY;
       }
     };
 
-    checkEligibility();
-    touchQuery.addEventListener('change', checkEligibility);
-    motionQuery.addEventListener('change', checkEligibility);
+    const onMouseLeave = () => {
+      isVisible = false;
+      ring.style.opacity = '0';
+    };
+
+    const onMouseEnter = () => {
+      if (rawX > -199) {
+        isVisible = true;
+        ring.style.opacity = '1';
+      }
+    };
+
+    document.addEventListener('mousemove', onMouseMove, { passive: true });
+    document.addEventListener('mouseleave', onMouseLeave, { passive: true });
+    document.addEventListener('mouseenter', onMouseEnter, { passive: true });
+
+    // Start the loop
+    rafId = requestAnimationFrame(tick);
 
     return () => {
-      touchQuery.removeEventListener('change', checkEligibility);
-      motionQuery.removeEventListener('change', checkEligibility);
-      document.body.classList.remove('custom-cursor-active');
+      cancelAnimationFrame(rafId);
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseleave', onMouseLeave);
+      document.removeEventListener('mouseenter', onMouseEnter);
     };
   }, []);
 
-  useEffect(() => {
-    if (disabled) return;
-
-    // 2. Track global mouse positioning coordinates
-    const handleMouseMove = (e: MouseEvent) => {
-      mouse.current.x = e.clientX;
-      mouse.current.y = e.clientY;
-      if (!isVisible) setIsVisible(true);
-    };
-
-    const handleMouseLeave = () => {
-      setIsVisible(false);
-    };
-
-    const handleMouseEnter = () => {
-      setIsVisible(true);
-    };
-
-    // 3. Event Delegation for hover target states
-    const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (!target) return;
-
-      const isButton = target.closest('button') || target.closest('.btn') || target.closest('[role="button"]') || target.closest('input[type="submit"]');
-      const isLink = target.closest('a');
-      const isCard = target.closest('.glass-panel') || target.closest('[data-hover-card]');
-
-      if (isButton) {
-        setCursorState('button');
-      } else if (isLink) {
-        setCursorState('link');
-      } else if (isCard) {
-        setCursorState('card');
-      } else {
-        setCursorState('default');
-      }
-    };
-
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    document.addEventListener('mouseleave', handleMouseLeave);
-    document.addEventListener('mouseenter', handleMouseEnter);
-    window.addEventListener('mouseover', handleMouseOver, { passive: true });
-
-    // 4. Smooth interpolation loop running at hardware-accelerated 60fps
-    let animFrameId = 0;
-    const updatePosition = () => {
-      // Smooth easing factor (dot is fast, ring has a slow lag)
-      dotPos.current.x += (mouse.current.x - dotPos.current.x) * 0.8;
-      dotPos.current.y += (mouse.current.y - dotPos.current.y) * 0.8;
-
-      ringPos.current.x += (mouse.current.x - ringPos.current.x) * 0.16;
-      ringPos.current.y += (mouse.current.y - ringPos.current.y) * 0.16;
-
-      if (dotRef.current) {
-        dotRef.current.style.transform = `translate3d(${dotPos.current.x}px, ${dotPos.current.y}px, 0)`;
-      }
-      if (ringRef.current) {
-        ringRef.current.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0) translate3d(-50%, -50%, 0)`;
-      }
-
-      animFrameId = requestAnimationFrame(updatePosition);
-    };
-    animFrameId = requestAnimationFrame(updatePosition);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseleave', handleMouseLeave);
-      document.removeEventListener('mouseenter', handleMouseEnter);
-      window.removeEventListener('mouseover', handleMouseOver);
-      cancelAnimationFrame(animFrameId);
-    };
-  }, [disabled, isVisible]);
-
-  // 5. Magnetic Button Effect Controller
-  useEffect(() => {
-    if (disabled) return;
-
-    const handleMagneticMove = (e: MouseEvent) => {
-      const targets = document.querySelectorAll('[data-magnetic]');
-      
-      targets.forEach((target) => {
-        const el = target as HTMLElement;
-        const rect = el.getBoundingClientRect();
-        
-        // Find the element center point coordinates
-        const elCenterX = rect.left + rect.width / 2;
-        const elCenterY = rect.top + rect.height / 2;
-
-        // Calculate distance from cursor to element center
-        const deltaX = e.clientX - elCenterX;
-        const deltaY = e.clientY - elCenterY;
-        const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-
-        // Pull threshold (e.g. 45px)
-        const threshold = 45;
-        if (distance < threshold) {
-          // Attract element towards the cursor subtly (factor 0.28)
-          el.style.transform = `translate3d(${deltaX * 0.28}px, ${deltaY * 0.28}px, 0)`;
-          el.style.transition = 'transform 0.08s ease-out';
-        } else {
-          // Return to normal
-          el.style.transform = 'translate3d(0, 0, 0)';
-          el.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)';
-        }
-      });
-    };
-
-    window.addEventListener('mousemove', handleMagneticMove, { passive: true });
-    return () => {
-      window.removeEventListener('mousemove', handleMagneticMove);
-      // Reset any transformed buttons on cleanup
-      document.querySelectorAll('[data-magnetic]').forEach((target) => {
-        const el = target as HTMLElement;
-        el.style.transform = '';
-        el.style.transition = '';
-      });
-    };
-  }, [disabled]);
-
-  if (disabled) return null;
-
   return (
-    <div 
-      className={cn(
-        "fixed inset-0 pointer-events-none z-[999] transition-opacity duration-300",
-        isVisible ? "opacity-100" : "opacity-0"
-      )}
+    <div
+      ref={ringRef}
+      className="cc-ring"
+      data-state="default"
       aria-hidden="true"
+      style={{ opacity: 0 }}
     >
-      {/* 1. Inner Cursor Dot */}
-      <div 
-        ref={dotRef}
-        className={cn(
-          "fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-accent-cyan -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-transform duration-200",
-          cursorState !== 'default' ? "scale-0" : "scale-100"
-        )}
-      />
-
-      {/* 2. Outer Cursor Follower Ring */}
-      <div 
-        ref={ringRef}
-        className={cn(
-          "fixed top-0 left-0 rounded-full border pointer-events-none transition-all duration-300 ease-out",
-          // Default state
-          cursorState === 'default' && "w-8 h-8 border-accent-cyan/35 bg-transparent",
-          // Button state: scale up and soft neon fill
-          cursorState === 'button' && "w-11 h-11 border-accent-cyan/80 bg-accent-cyan/10 shadow-glass-glow",
-          // Link state: change color and scale down slightly
-          cursorState === 'link' && "w-7 h-7 border-accent-purple/90 bg-accent-purple/5 shadow-[0_0_8px_rgba(139,92,246,0.25)]",
-          // Card state: scale up further with dashed margins
-          cursorState === 'card' && "w-13 h-13 border-dashed border-accent-cyan/25 bg-transparent"
-        )}
-      />
+      <div className="cc-ring-inner">
+        <span className="cc-label">VIEW</span>
+      </div>
     </div>
   );
 };

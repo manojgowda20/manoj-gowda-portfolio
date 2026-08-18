@@ -23,7 +23,7 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
       const playPromise = video.play();
       if (playPromise !== undefined) {
         playPromise.catch(() => {
-          // Autoplay fallback: poster/base image displays smoothly
+          // Autoplay fallback
         });
       }
     }
@@ -128,7 +128,6 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
 
   // Mobile Touch Handlers
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    // If the touch target is a button, link, or inside navigation, DO NOT intercept!
     const target = e.target as HTMLElement | null;
     if (target && (target.closest('button') || target.closest('a') || target.closest('nav') || target.closest('.pointer-events-auto'))) {
       return;
@@ -169,7 +168,7 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
     setMobileMenuOpen(false);
     const element = document.getElementById(id);
     if (element) {
-      const topOffset = element.getBoundingClientRect().top + window.pageYOffset - 60;
+      const topOffset = element.getBoundingClientRect().top + window.pageYOffset - 70;
       window.scrollTo({ top: Math.max(0, topOffset), behavior: 'smooth' });
     }
     if (onNavigate) {
@@ -181,7 +180,7 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
     <div
       ref={containerRef}
       id="home"
-      className="relative w-full h-[100dvh] min-h-[580px] max-h-[1000px] overflow-hidden isolate select-none bg-[#edf5ff] text-[#0e1111] font-display flex flex-col justify-between touch-pan-y"
+      className="relative w-full h-[100dvh] min-h-[580px] max-h-[1000px] overflow-hidden isolate select-none bg-[#090d16] text-white font-display flex flex-col justify-between touch-pan-y"
       onPointerEnter={handlePointerEnter}
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
@@ -240,19 +239,20 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
         .hero-headline {
           position: absolute;
           left: max(5.6vw, 2rem);
-          top: 32%;
-          font-size: clamp(4.2rem, 6vw, 6.8rem);
+          top: 30%;
+          font-size: clamp(3.8rem, 6.2vw, 6.8rem);
           line-height: 0.93;
-          letter-spacing: -0.085em;
-          font-weight: 400;
-          z-index: 10;
+          letter-spacing: -0.075em;
+          font-weight: 800;
+          z-index: 20;
+          text-shadow: 0 4px 30px rgba(0, 0, 0, 0.9), 0 2px 8px rgba(0, 0, 0, 0.8);
         }
 
         .hero-intro {
           position: absolute;
           left: max(5.6vw, 2rem);
-          bottom: 6%;
-          max-width: 28rem;
+          bottom: 5.5%;
+          max-width: 32rem;
           display: flex;
           flex-direction: column;
           gap: 1.25rem;
@@ -262,9 +262,9 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
         .hero-tagline {
           position: absolute;
           right: max(5.6vw, 2rem);
-          bottom: 6%;
+          bottom: 5.5%;
           text-align: right;
-          z-index: 10;
+          z-index: 25;
           line-height: 1.4;
         }
 
@@ -272,10 +272,10 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
           .hero-headline {
             top: 14%;
             left: 1.25rem;
-            width: 80%;
-            font-size: clamp(2.3rem, 9.5vw, 3.4rem);
+            width: 85%;
+            font-size: clamp(2.4rem, 9.8vw, 3.6rem);
             line-height: 0.92;
-            max-width: 320px;
+            max-width: 340px;
           }
           .hero-intro {
             left: 1.25rem;
@@ -285,7 +285,7 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
             gap: 0.9rem;
           }
           .hero-tagline {
-            top: 45%;
+            top: 44%;
             right: 1.25rem;
             bottom: auto;
           }
@@ -364,28 +364,31 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
       </div>
       <div aria-hidden="true" className="hero-base animate-hero-image" style={{ zIndex: 0 }} />
 
+      {/* Cinematic subtle contrast vignette for optimal text legibility */}
+      <div className="absolute inset-0 z-[2] bg-gradient-to-r from-black/70 via-black/30 to-transparent pointer-events-none" />
+
       {/* LAYER 2: Reveal Portrait */}
       <div ref={revealRef} aria-hidden="true" className="hero-reveal animate-hero-image" />
 
       {/* LAYER 3: Technical Grid + Large Circle */}
       <div className="absolute inset-0 z-10 pointer-events-none" aria-hidden="true">
         {/* Desktop 12 Columns, 4 Rows Grid */}
-        <div className="absolute inset-0 hidden md:grid grid-cols-12 grid-rows-4 opacity-[0.08]">
+        <div className="absolute inset-0 hidden md:grid grid-cols-12 grid-rows-4 opacity-[0.06]">
           {Array.from({ length: 48 }).map((_, i) => (
-            <div key={i} className="border-r border-b border-[#0e1111]/20" />
+            <div key={i} className="border-r border-b border-white/20" />
           ))}
         </div>
 
         {/* Mobile 4 Columns, 6 Rows Grid */}
         <div className="absolute inset-0 grid md:hidden grid-cols-4 grid-rows-6 opacity-[0.04]">
           {Array.from({ length: 24 }).map((_, i) => (
-            <div key={i} className="border-r border-b border-[#0e1111]/20" />
+            <div key={i} className="border-r border-b border-white/20" />
           ))}
         </div>
 
         {/* Desktop Oversized Circle */}
         <div 
-          className="absolute hidden md:block rounded-full border border-[#0e1111]/10 opacity-[0.08]"
+          className="absolute hidden md:block rounded-full border border-white/10 opacity-[0.08]"
           style={{
             width: 'min(78vw, 72rem)',
             aspectRatio: '1/1',
@@ -396,7 +399,7 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
 
         {/* Mobile Oversized Circle */}
         <div 
-          className="absolute block md:hidden rounded-full border border-[#0e1111]/10 opacity-[0.04]"
+          className="absolute block md:hidden rounded-full border border-white/10 opacity-[0.05]"
           style={{
             width: '150vw',
             aspectRatio: '1/1',
@@ -406,7 +409,7 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
         />
       </div>
 
-      {/* Top Bar for initial hero view (High-visibility frosted pill styling for desktop and mobile) */}
+      {/* Top Bar for initial hero view (High-contrast glassmorphic styling) */}
       <nav 
         className="absolute top-[max(1rem,env(safe-area-inset-top,0px))] left-0 right-0 px-3 sm:px-[max(4vw,1.5rem)] flex justify-between items-center z-50 animate-nav pointer-events-auto"
         aria-label="Hero navigation"
@@ -414,43 +417,43 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
         <button 
           type="button"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/95 backdrop-blur-md border border-black/15 shadow-sm text-left focus:outline-none focus:ring-2 focus:ring-[#0e1111]/20 cursor-pointer transition-transform hover:scale-[1.02] active:scale-95 touch-manipulation"
+          className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-black/60 backdrop-blur-xl border border-white/20 shadow-lg text-left focus:outline-none focus:ring-2 focus:ring-white/40 cursor-pointer transition-transform hover:scale-[1.02] active:scale-95 touch-manipulation"
         >
-          <svg viewBox="0 0 32 32" className="w-4 h-4 sm:w-5 sm:h-5 fill-none stroke-current stroke-[2.2] text-[#0e1111]" aria-hidden="true">
+          <svg viewBox="0 0 32 32" className="w-4 h-4 sm:w-5 sm:h-5 fill-none stroke-current stroke-[2.2] text-white" aria-hidden="true">
             <path d="M6 24V8l10 10 10-10v16" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          <span className="font-technical text-[11px] sm:text-xs font-bold tracking-tight uppercase text-[#0e1111]">
+          <span className="font-technical text-[11px] sm:text-xs font-bold tracking-tight uppercase text-white">
             MANOJ GOWDA CD
           </span>
         </button>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-6 px-6 py-2 rounded-full bg-white/95 backdrop-blur-md border border-black/15 shadow-sm font-technical text-xs uppercase tracking-wider text-[#0e1111] font-bold">
+        <div className="hidden md:flex items-center gap-6 px-6 py-2 rounded-full bg-black/60 backdrop-blur-xl border border-white/20 shadow-lg font-technical text-xs uppercase tracking-wider text-white font-bold">
           <button 
             type="button"
             onClick={() => scrollToSection('about')}
-            className="hover:text-black/60 transition-colors focus:outline-none focus:underline cursor-pointer touch-manipulation py-1 px-1"
+            className="text-white/80 hover:text-white transition-colors focus:outline-none focus:underline cursor-pointer touch-manipulation py-1 px-1"
           >
             About
           </button>
           <button 
             type="button"
             onClick={() => scrollToSection('work')}
-            className="hover:text-black/60 transition-colors focus:outline-none focus:underline cursor-pointer touch-manipulation py-1 px-1"
+            className="text-white/80 hover:text-white transition-colors focus:outline-none focus:underline cursor-pointer touch-manipulation py-1 px-1"
           >
             Work
           </button>
           <button 
             type="button"
             onClick={() => scrollToSection('skills')}
-            className="hover:text-black/60 transition-colors focus:outline-none focus:underline cursor-pointer touch-manipulation py-1 px-1"
+            className="text-white/80 hover:text-white transition-colors focus:outline-none focus:underline cursor-pointer touch-manipulation py-1 px-1"
           >
             Skills
           </button>
           <button 
             type="button"
             onClick={() => scrollToSection('education')}
-            className="hover:text-black/60 transition-colors focus:outline-none focus:underline cursor-pointer touch-manipulation py-1 px-1"
+            className="text-white/80 hover:text-white transition-colors focus:outline-none focus:underline cursor-pointer touch-manipulation py-1 px-1"
           >
             Education
           </button>
@@ -461,7 +464,7 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2.5 rounded-full bg-white/95 backdrop-blur-md border border-black/15 text-[#0e1111] shadow-sm flex items-center justify-center cursor-pointer active:scale-90 transition-transform touch-manipulation min-w-[40px] min-h-[40px]"
+            className="md:hidden p-2.5 rounded-full bg-black/60 backdrop-blur-xl border border-white/20 text-white shadow-lg flex items-center justify-center cursor-pointer active:scale-90 transition-transform touch-manipulation min-w-[40px] min-h-[40px]"
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           >
             {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
@@ -470,7 +473,7 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
             href={personalInfo.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-[#0e1111] text-white hover:bg-[#0e1111]/90 border border-black/10 px-4 sm:px-5 py-2 rounded-full font-technical text-[11px] sm:text-xs uppercase tracking-wider font-bold transition-all duration-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0e1111]/20 flex items-center justify-center min-h-[40px] cursor-pointer active:scale-95 touch-manipulation"
+            className="bg-white text-[#0e1111] hover:bg-white/90 border border-white/20 px-4 sm:px-5 py-2 rounded-full font-technical text-[11px] sm:text-xs uppercase tracking-wider font-bold transition-all duration-300 shadow-lg focus:outline-none focus:ring-2 focus:ring-white/40 flex items-center justify-center min-h-[40px] cursor-pointer active:scale-95 touch-manipulation"
           >
             <span>Let's talk</span>
           </a>
@@ -484,63 +487,65 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="absolute top-[72px] left-3 right-3 p-4 rounded-2xl bg-white/95 backdrop-blur-xl border border-black/15 shadow-2xl z-50 md:hidden font-technical text-xs uppercase tracking-wider text-[#0e1111] font-bold flex flex-col gap-2 pointer-events-auto"
+            className="absolute top-[72px] left-3 right-3 p-4 rounded-2xl bg-black/85 backdrop-blur-2xl border border-white/20 shadow-2xl z-50 md:hidden font-technical text-xs uppercase tracking-wider text-white font-bold flex flex-col gap-2 pointer-events-auto"
           >
             {['about', 'work', 'skills', 'education'].map((sec) => (
               <button
                 key={sec}
                 type="button"
                 onClick={() => scrollToSection(sec)}
-                className="text-left p-3 rounded-xl hover:bg-black/5 active:bg-black/10 flex items-center justify-between transition-colors cursor-pointer min-h-[44px] touch-manipulation"
+                className="text-left p-3 rounded-xl hover:bg-white/10 active:bg-white/20 flex items-center justify-between transition-colors cursor-pointer min-h-[44px] touch-manipulation text-white"
               >
                 <span>{sec}</span>
-                <ArrowUpRight size={15} className="opacity-60" />
+                <ArrowUpRight size={15} className="opacity-60 text-white" />
               </button>
             ))}
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* LAYER 4: Headline and Copy */}
-      <section className="hero-headline flex flex-col pointer-events-none">
+      {/* LAYER 4: Headline (Bright Luminous White with Ambient Shadow) */}
+      <section className="hero-headline flex flex-col pointer-events-none text-white">
         <span className="overflow-hidden">
-          <span className="block animate-headline-line-1">BUILDING</span>
+          <span className="block animate-headline-line-1 text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]">BUILDING</span>
         </span>
         <span className="overflow-hidden">
-          <span className="block animate-headline-line-2">BEYOND</span>
+          <span className="block animate-headline-line-2 text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]">BEYOND</span>
         </span>
         <span className="overflow-hidden">
-          <span className="block animate-headline-line-3 text-black/90">POSSIBLE.</span>
+          <span className="block animate-headline-line-3 text-white/95 drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]">POSSIBLE.</span>
         </span>
       </section>
 
-      {/* Bottom copy and action triggers */}
+      {/* Bottom copy and action triggers in Frosted Card */}
       <div className="hero-intro animate-intro-container flex flex-col items-start pointer-events-auto">
-        <p className="text-xs sm:text-sm md:text-base leading-relaxed text-[#0e1111]/85 font-display tracking-tight pointer-events-auto">
-          I am a full-stack developer and Python engineer crafting robust backend APIs, secure registries, and intelligent computer vision pipelines.
-        </p>
-        <div className="flex flex-wrap items-center gap-2.5 sm:gap-4 pointer-events-auto">
-          <button 
-            type="button"
-            onClick={() => scrollToSection('work')}
-            className="bg-white text-[#0e1111] hover:bg-[#edf5ff] border border-black/15 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-technical text-[11px] sm:text-xs uppercase tracking-wider font-bold transition-all duration-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0e1111]/20 flex items-center justify-center min-h-[44px] cursor-pointer active:scale-95 touch-manipulation"
-          >
-            Explore my work
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollToSection('about')}
-            className="md:hidden inline-flex items-center gap-1.5 text-[11px] font-technical uppercase font-bold text-[#0e1111] px-4 py-2.5 rounded-full border border-black/15 bg-white/95 backdrop-blur-sm cursor-pointer active:scale-95 min-h-[44px] touch-manipulation shadow-sm"
-          >
-            <span>About</span>
-            <ChevronDown size={14} className="animate-bounce" />
-          </button>
+        <div className="p-4 sm:p-5 rounded-2xl bg-black/50 backdrop-blur-xl border border-white/15 shadow-2xl space-y-3.5">
+          <p className="text-xs sm:text-sm md:text-base leading-relaxed text-white/90 font-display tracking-tight">
+            I am a full-stack developer and Python engineer crafting robust backend APIs, secure registries, and intelligent computer vision pipelines.
+          </p>
+          <div className="flex flex-wrap items-center gap-2.5 sm:gap-4">
+            <button 
+              type="button"
+              onClick={() => scrollToSection('work')}
+              className="bg-white text-[#0e1111] hover:bg-white/90 border border-white/20 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-technical text-[11px] sm:text-xs uppercase tracking-wider font-bold transition-all duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-white/40 flex items-center justify-center min-h-[44px] cursor-pointer active:scale-95 touch-manipulation"
+            >
+              Explore my work
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollToSection('about')}
+              className="md:hidden inline-flex items-center gap-1.5 text-[11px] font-technical uppercase font-bold text-white px-4 py-2.5 rounded-full border border-white/20 bg-white/10 backdrop-blur-md cursor-pointer active:scale-95 min-h-[44px] touch-manipulation shadow-sm"
+            >
+              <span>About</span>
+              <ChevronDown size={14} className="animate-bounce" />
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Small mono tagline */}
+      {/* Small mono tagline in frosted pill */}
       <div className="hero-tagline animate-tagline-text text-right pointer-events-none">
-        <div className="font-technical text-[9px] sm:text-[10px] md:text-xs tracking-wider uppercase opacity-60 leading-relaxed">
+        <div className="p-2.5 sm:p-3 rounded-xl bg-black/50 backdrop-blur-xl border border-white/15 font-technical text-[9px] sm:text-[10px] md:text-xs tracking-wider uppercase text-white/80 leading-relaxed shadow-lg">
           BUILDING THE<br />
           NEXT VERSION<br />
           IN PUBLIC

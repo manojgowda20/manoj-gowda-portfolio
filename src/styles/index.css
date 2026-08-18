@@ -41,3 +41,81 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(14, 17, 17, 0.35);
 }
+
+/* ─── CUSTOM CURSOR (desktop fine-pointer only) ─────────────────────── */
+@media (hover: hover) and (pointer: fine) {
+  *,
+  *::before,
+  *::after {
+    cursor: none !important;
+  }
+
+  /* Outer ring — transitions size and shape smoothly */
+  .cc-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 99999;
+    /* Centred on cursor tip via translate */
+    will-change: transform;
+  }
+
+  .cc-ring-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #0e1111;
+    border: 1.5px solid transparent;
+    overflow: hidden;
+    /* Smooth size/colour transitions */
+    transition:
+      width  0.28s cubic-bezier(0.16, 1, 0.3, 1),
+      height 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      opacity 0.2s ease;
+  }
+
+  /* "VIEW" label inside cursor */
+  .cc-label {
+    font-family: 'Fragment Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #ffffff;
+    text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0;
+    transform: scale(0.7);
+    transition:
+      opacity 0.18s ease,
+      transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ── STATE: pointer (buttons / links) ── */
+  .cc-ring[data-state="pointer"] .cc-ring-inner {
+    width: 34px;
+    height: 34px;
+    background-color: transparent;
+    border-color: #0e1111;
+  }
+
+  /* ── STATE: view (project cards) ── */
+  .cc-ring[data-state="view"] .cc-ring-inner {
+    width: 60px;
+    height: 60px;
+    background-color: #0e1111;
+    border-color: transparent;
+  }
+
+  .cc-ring[data-state="view"] .cc-label {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
