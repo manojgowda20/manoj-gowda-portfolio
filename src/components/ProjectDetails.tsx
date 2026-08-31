@@ -105,7 +105,7 @@ const renderArchitectureDiagram = (id: string) => {
         {/* LLM Agent Core */}
         <rect x="20" y="190" width="200" height="46" rx="8" fill="#ffffff" stroke="#0e1111" strokeOpacity="0.3" strokeWidth="1.5" />
         <text x="120" y="208" fill="#0e1111" fontSize="10" fontWeight="bold" textAnchor="middle" fontFamily="Albert Sans, sans-serif">LLM Intent & Tool Calling</text>
-        <text x="120" y="222" fill="#0e1111" opacity="0.6" fontSize="7.5" textAnchor="middle" fontFamily="Fragment Mono, monospace">OpenAI / LangChain Function Routing</text>
+        <text x="120" y="222" fill="#0e1111" opacity="0.6" fontSize="7.5" textAnchor="middle" fontFamily="Fragment Mono, monospace">Groq LLaMA-3.3-70B Tool Execution</text>
 
         <path d="M 120 236 L 120 280" fill="none" stroke="#0e1111" strokeOpacity="0.2" strokeWidth="1.5" markerEnd="url(#arrowLight3)" />
         <circle r="2.5" fill="#0e1111" opacity="0.7">

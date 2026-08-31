@@ -213,10 +213,10 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                 </span>
-                <span>AI_BANKING_ORCHESTRATOR</span>
+                <span>FINAGENT_ORCHESTRATOR</span>
               </span>
               <span className="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono font-semibold border border-emerald-500/30">
-                AGENTIC_WORKFLOW
+                GROQ_LLAMA_3.3_70B
               </span>
             </div>
 
