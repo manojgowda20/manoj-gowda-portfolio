@@ -12,25 +12,8 @@ interface GlassHeroProps {
 export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const revealRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
-
-  // Ensure video autoplays smoothly across mobile and desktop browsers
-  useEffect(() => {
-    const video = videoRef.current;
-    if (video) {
-      video.muted = true;
-      video.defaultMuted = true;
-      video.playsInline = true;
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // Autoplay fallback
-        });
-      }
-    }
-  }, []);
 
   // Animation values stored in refs to prevent React state re-renders
   const rawPos = useRef({ x: -999, y: -999 });
@@ -190,52 +173,6 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
     >
       {/* Scoped CSS Styles */}
       <style>{`
-        .hero-base, .hero-reveal {
-          position: absolute;
-          inset: 0;
-          background-position: center;
-          background-repeat: no-repeat;
-          background-size: cover;
-          pointer-events: none;
-        }
-
-        .hero-base {
-          background-image: url('/images/Base_image_desktop.png');
-          z-index: 1;
-        }
-
-        .hero-reveal {
-          background-image: url('/images/Reveal_image_desktop.png');
-          z-index: 2;
-          -webkit-mask-image: radial-gradient(
-            circle var(--reveal-radius, 0px) at var(--reveal-x, -999px) var(--reveal-y, -999px),
-            rgba(255, 255, 255, 0.94) 0%,
-            rgba(255, 255, 255, 0.94) 62%,
-            rgba(255, 255, 255, 0.72) 76%,
-            rgba(255, 255, 255, 0.28) 90%,
-            transparent 100%
-          );
-          mask-image: radial-gradient(
-            circle var(--reveal-radius, 0px) at var(--reveal-x, -999px) var(--reveal-y, -999px),
-            rgba(255, 255, 255, 0.94) 0%,
-            rgba(255, 255, 255, 0.94) 62%,
-            rgba(255, 255, 255, 0.72) 76%,
-            rgba(255, 255, 255, 0.28) 90%,
-            transparent 100%
-          );
-        }
-
-        @media (max-width: 767px) and (orientation: portrait) {
-          .hero-base {
-            background-image: url('/images/Base_image_mobile.png');
-            background-position: 60% 15%;
-          }
-          .hero-reveal {
-            background-image: url('/images/Reveal_image_mobile.png');
-            background-position: 60% 15%;
-          }
-        }
-
         .hero-headline {
           position: absolute;
           left: max(5.6vw, 2rem);
@@ -346,29 +283,31 @@ export const GlassHero: React.FC<GlassHeroProps> = ({ onNavigate }) => {
         }
       `}</style>
 
-      {/* LAYER 1: Base Portrait / Video Background (Cropped to remove AI watermarks & centered for mobile & web) */}
+      {/* LAYER 1: Hero Background Portrait Photo */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-[1]">
-        <video
-          ref={videoRef}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          poster="/images/Base_image_desktop.png"
-          className="absolute w-[116%] h-[116%] -left-[8%] top-[1%] max-w-none object-cover object-[60%_15%] md:w-[112%] md:h-[112%] md:-left-[6%] md:top-[1%] md:object-center pointer-events-none"
-        >
-          <source src="/images/hero.mp4" type="video/mp4" />
-          <source src="/images/Man_walking_toward_camera_202608181141.mp4" type="video/mp4" />
-        </video>
+        <img
+          src="/images/hero_bg.jpg"
+          alt="Manoj Gowda CD"
+          className="w-full h-full object-cover object-[center_20%] sm:object-[center_22%] md:object-[68%_26%] lg:object-[65%_25%] animate-hero-image transition-transform duration-700 ease-out select-none scale-[1.02]"
+          loading="eager"
+        />
       </div>
-      <div aria-hidden="true" className="hero-base animate-hero-image" style={{ zIndex: 0 }} />
 
-      {/* Cinematic subtle contrast vignette for optimal text legibility */}
-      <div className="absolute inset-0 z-[2] bg-gradient-to-r from-black/70 via-black/30 to-transparent pointer-events-none" />
+      {/* Cinematic contrast gradient overlays for pristine readability & sleek atmosphere */}
+      {/* Horizontal depth: Darker on the left for the large title & bio card */}
+      <div className="absolute inset-0 z-[2] bg-gradient-to-r from-[#090d16]/90 via-[#090d16]/55 to-black/35 pointer-events-none" />
+      {/* Vertical depth: Smooth fade into background at bottom & soft vignette at top */}
+      <div className="absolute inset-0 z-[2] bg-gradient-to-t from-[#090d16] via-transparent to-[#090d16]/40 pointer-events-none" />
 
-      {/* LAYER 2: Reveal Portrait */}
-      <div ref={revealRef} aria-hidden="true" className="hero-reveal animate-hero-image" />
+      {/* LAYER 2: Interactive Subtle Spotlight Glow on Cursor */}
+      <div 
+        ref={revealRef} 
+        aria-hidden="true" 
+        className="absolute inset-0 z-[3] pointer-events-none transition-opacity duration-300"
+        style={{
+          background: `radial-gradient(circle var(--reveal-radius, 0px) at var(--reveal-x, -999px) var(--reveal-y, -999px), rgba(255, 255, 255, 0.12) 0%, rgba(96, 165, 250, 0.06) 40%, transparent 70%)`
+        }}
+      />
 
       {/* LAYER 3: Technical Grid + Large Circle */}
       <div className="absolute inset-0 z-10 pointer-events-none" aria-hidden="true">
